@@ -4,7 +4,9 @@
 }
 .cont{
   display: flex;
+  flex-direction: row;
   justify-content: space-around;
+  padding: 0px 10em;
 }
 
 ul{
@@ -14,20 +16,71 @@ ul{
   list-style: none;
   padding: 0;
 }
-li{
-  display: flex;
+thead tr{
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  margin-bottom: 0;
+  font-size: x-large;
+}
+th{
+  border-right: 1px rgb(237, 237, 237) solid;
   padding: 1em;
-  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.192);
-  margin: 0 1em;
+}
+
+td{
+  border-right: 1px rgb(237, 237, 237) solid;
+  padding: 1em;
+}
+tr{
+  display: flex;
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.138);
+  margin-top: 1em;
+  padding: 0.5em;
   border-radius: 1em;
   justify-content: space-between;
+
+}
+tr td{
+  font-size: x-large;
+}
+tr td:first-child, th:first-child{
+  font-weight: bold;
+}
+tr td:last-child, th:last-child{
+  border-right: none;
 }
 
 .lol{
   display: flex;
+  flex-direction: column;
   width: 100%;
   padding: 1em;
-  box-shadow: 0px 10px 10px 0px rgba(0, 0, 0, 0.192);
   margin: 0 1em;
   border-radius: 1em;
+}
+
+.good{
+  color:lawngreen;
+  font-weight: bold;
+}
+.bad{
+  color: red;
+  font-weight: bold;
+}
+.test{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 100%;
+}
+.test div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem;
+  padding: 1rem;
+}
+.test h2{
+  border-bottom: 1px solid;
 }
