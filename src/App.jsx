@@ -52,7 +52,7 @@ function App() {
         searchQuery +
         '","selectedFilters":[{"name":"CLASS","values":["INDEX"]},{"name":"LEVERAGE","values":["0","1000000"]},{"name":"SPREAD","values":["0","1000000"]}]}}',
       method: "POST",
-      mode: "cors",
+      mode: "no-cors",
       credentials: "include",
     })
       .then((res) => res.json())
