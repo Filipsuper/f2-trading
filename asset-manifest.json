@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/f2-trading/static/css/main.7417406d.css",
-    "main.js": "/f2-trading/static/js/main.71595cda.js",
+    "main.js": "/f2-trading/static/js/main.64c747c8.js",
     "index.html": "/f2-trading/index.html",
     "main.7417406d.css.map": "/f2-trading/static/css/main.7417406d.css.map",
-    "main.71595cda.js.map": "/f2-trading/static/js/main.71595cda.js.map"
+    "main.64c747c8.js.map": "/f2-trading/static/js/main.64c747c8.js.map"
   },
   "entrypoints": [
     "static/css/main.7417406d.css",
-    "static/js/main.71595cda.js"
+    "static/js/main.64c747c8.js"
   ]
 }
