@@ -52,7 +52,7 @@ function App() {
         searchQuery +
         '","selectedFilters":[{"name":"CLASS","values":["INDEX"]},{"name":"LEVERAGE","values":["0","1000000"]},{"name":"SPREAD","values":["0","1000000"]}]}}',
       method: "POST",
-      mode: "no-cors",
+      mode: "cors",
       credentials: "include",
     })
       .then((res) => res.json())
@@ -125,7 +125,7 @@ function App() {
         <ul>
           <div className="inp-cont">
             <div className="text-div">
-              <h2>Produkt</h2>
+              <h2>Product</h2>
             </div>
             <input type="text" ref={product} />
           </div>
