@@ -17,7 +17,7 @@ export const options = {
 };
 
 function App() {
-  const [leverage, setLeverage] = useState([]);
+  // const [leverage, setLeverage] = useState([]);
   const [data, setData] = useState([]);
   const [results, setResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,8 +69,8 @@ function App() {
   };
 
   const on_calculate = () => {
-    let product_val = product.current.value;
-    setSearchQuery(product_val);
+    // let product_val = product.current.value;
+    setSearchQuery([1]);
   };
 
   const calculate_risk = () => {
@@ -79,19 +79,19 @@ function App() {
     let risk_val = risk.current.value;
     let reward_val = reward.current.value;
 
-    let leverage_val = 1;
+    let leverage_val = inp.current.value;
     let spread_val = 0;
 
-    if (data.data != undefined) {
-      if (data.data.length == 0) {
-        setResults(["Kunde inte hitta produkten"]);
-        return;
-      }
-      leverage_val = data.data[0].fundleverage;
-      spread_val = size_val * (data.data[0].spreadpct / 100);
-      console.log(spread_val);
-      setSpread(spread_val);
-    }
+    // if (data.data != undefined) {
+    //   if (data.data.length == 0) {
+    //     setResults(["Kunde inte hitta produkten"]);
+    //     return;
+    //   }
+    //   leverage_val = data.data[0].fundleverage;
+    //   spread_val = size_val * (data.data[0].spreadpct / 100);
+    //   console.log(spread_val);
+    //   setSpread(spread_val);
+    // }
 
     let nominal_value = size_val * leverage_val;
     let pip = 1;
@@ -123,12 +123,12 @@ function App() {
       <h1>CERT KALKYLATOR</h1>
       <div className="cont">
         <ul>
-          <div className="inp-cont">
+          {/* <div className="inp-cont">
             <div className="text-div">
               <h2>Product</h2>
             </div>
             <input type="text" ref={product} />
-          </div>
+          </div> */}
           <div className="inp-cont">
             <div className="text-div">
               <h2>Price</h2>
@@ -154,7 +154,7 @@ function App() {
             <input type="text" name="" id="" ref={size} />
           </div>
 
-          {/* <div className=" inp-cont leverage">
+          <div className=" inp-cont leverage">
             <div className="inp-cont">
               <div className="text-div">
                 <h2>Leverage</h2>
@@ -167,7 +167,7 @@ function App() {
               <button onClick={() => leverage_toggle(15)}>15</button>
               <button onClick={() => leverage_toggle(20)}>20</button>
             </div>
-          </div> */}
+          </div>
           <button onClick={() => on_calculate()}>CALC</button>
           {results.map((res, idx) => {
             return (
