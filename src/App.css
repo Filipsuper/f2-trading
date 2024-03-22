@@ -1,3 +1,25 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components{
+  .debug{
+    @apply border border-red-500;
+  }
+  .horizontal{
+    @apply flex flex-row;
+  }
+  .vertical {
+    @apply flex flex-col;
+  }
+  .center-v{
+    @apply justify-center;
+  }
+  .center-h{
+    @apply items-center;
+  }
+}
+
 .App {
   text-align: center;
   color: black;
@@ -49,7 +71,6 @@ input{
 }
 button{
   background-color: rgb(129, 231, 159);
-  margin-top: 1em;
   color: aliceblue;
   font-weight: bold;
 }
@@ -82,7 +103,7 @@ button:active{
   border-top-left-radius: 0.5em;
   border-bottom-left-radius: 0.5em;
   padding: 0.7em;
-  width: 30%;
+  width: 100%;
 }
 
 .leverage{
@@ -98,4 +119,11 @@ button:active{
   border-bottom-left-radius: 0.5em;
   padding: 0.7em;
   width: 25%;
+}
+
+.win-trade{
+  @apply bg-green-200 text-green-500 p-1 rounded-md font-bold text-sm
+}
+.loss-trade{
+  @apply bg-red-200 text-red-500 p-1 rounded-md font-bold text-sm
 }
