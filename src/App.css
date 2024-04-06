@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+    :root {
+      --text: rgb(75 85 99);
+      --background: #0F2306;
+      --primary: #64a387;
+      --secondary: #a9d5c1;
+      --accent: #7ecba8;
+    }
+
+}
+
 @layer components{
   .debug{
     @apply border border-red-500;
@@ -20,9 +31,13 @@
   }
 }
 
+.window-header{
+  @apply w-full text-start text-sm px-2 h-8 flex items-center border-b border-b-neutral-200 bg-neutral-100 text-text 
+}
+
 .App {
+  @apply text-text border-secondary;
   text-align: center;
-  color: black;
 }
 .cont{
   display: flex;
@@ -53,27 +68,13 @@ li{
   margin: 0 1em;
   border-radius: 1em;
 }
-input, button{
-  border: solid rgb(216, 216, 216) 1px;
-  border-radius: 0.5em;
-  padding: 0.7em;
-  font-size: large;
-  outline: none;
+.dark-input{
+  @apply bg-white p-1
 }
 input{
-  border: solid rgb(216, 216, 216) 1px;
-  border-radius: 0.5em;
-  padding: 0.7em;
-  font-size: large;
-  outline: none;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  @apply border border-neutral-200 outline-none;
 }
-button{
-  background-color: rgb(129, 231, 159);
-  color: aliceblue;
-  font-weight: bold;
-}
+
 button:hover{
   transform: scale(0.99);
 }
@@ -85,13 +86,27 @@ button:active{
   display: flex;
   justify-content: space-between;
 }
+.transition-height{
+  transition: max-height 1000ms ease-out;
+}
+.trans-op-1000{
+  transition: opacity 700ms ease-in-out;
+  transition-delay: 300ms;
+}
+
+.trans-op-500{
+  transition: opacity 700ms ease-in-out;
+}
+
 
 .inp-cont{
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  margin-top: 1em;
+  @apply flex flex-row justify-center mt-2 
 }
+.inp-cont input{
+  @apply p-2 rounded-md bg-gray-200 border-gray-300 text-gray-500 md:w-96;
+  @apply focus:border-gray-400 transition-colors
+}
+
 .risk-cont{
   display: flex;
   flex-direction: row;
@@ -122,8 +137,30 @@ button:active{
 }
 
 .win-trade{
-  @apply bg-green-200 text-green-500 p-1 rounded-md font-bold text-sm
+  @apply bg-green-400 text-green-200 p-1 rounded-md font-bold text-sm
 }
 .loss-trade{
-  @apply bg-red-200 text-red-500 p-1 rounded-md font-bold text-sm
+  @apply bg-red-400 text-red-200 p-1 rounded-md font-bold text-sm
+}
+
+.navbar{
+  @apply mb-2 h-full w-full rounded-xl border border-gray-400 text-white bg-gray-800 flex justify-start shadow-sm
+}
+.navbar li{
+  @apply w-full h-full ml-0 shadow-none rounded-none  border-b border-gray-700  first:rounded-t-xl hover:bg-gray-900 last:border-0 last:rounded-b-xl hover:cursor-pointer
+}
+.navbar li a{
+  @apply w-full h-full flex justify-start items-center
+}
+
+.navbar li a span{
+  @apply ml-2
+}
+
+.trade-item-cont{
+  @apply col-span-1 row-span-1 bg-gray-100 rounded-md shadow-sm
+}
+
+.dashboard-content{
+  @apply bg-gray-100 shadow-sm rounded-xl border 
 }

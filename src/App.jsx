@@ -1,10 +1,21 @@
 import "./App.css";
-import { useEffect, useState, useRef, createContext, useContext } from "react";
-import TradeItem from "./components/TradeItem";
+import {
+  useEffect,
+  useState,
+  useRef,
+  createContext,
+  useContext,
+  useCallback,
+} from "react";
+import TradeItem from "./components/TradeItems/TradeItem";
 import TradeInput from "./components/TradeInput";
-import Overview from "./components/Overview";
-import { get_prices, get_trades } from "./tools/tools";
-import TradeItemClosed from "./components/TradeItemClosed";
+import Overview from "./components/Overview/Overview";
+import { get_overview, get_prices, get_trades } from "./tools/tools";
+import TradeItemClosed from "./components/TradeItems/TradeItemClosed";
+import Header from "./components/Header";
+import TradeTable from "./components/TradeTable";
+import Sidebar from "./components/Sidebar";
+import { ApplicationContext } from "./providers/ApplicationProvider";
 
 export const options = {
   responsive: true,
@@ -19,47 +30,29 @@ export const options = {
   },
 };
 
-const GlobalContext = createContext();
-export const useGlobal = () => useContext(GlobalContext);
-
 function App() {
-  const [data, setData] = useState([]);
-  const [refresh, setRefresh] = useState([]);
+  const { tradesData, refresh } = useContext(ApplicationContext);
   const [stockPrices, setStockPrices] = useState([]);
 
   useEffect(() => {
-    get_trades(setData);
-  }, [refresh]);
+    refresh();
+  }, []);
 
   return (
-    <div className="App flex flex-row p-6">
-      <GlobalContext.Provider value={{ refresh, setRefresh }}>
-        <div className="w-1/2 h-full flex flex-col items-center">
-          <div className="flex w-5/6 "></div>
-          <ul className="h-full w-5/6">
-            <div className="w-full p-2 flex justify-start mb-4 font-bold">
-              <h1>Positions </h1>
-            </div>
-            <div className="w-full border-b justify-around text-md horizontal mb-2 p-2">
-              <h1>Symbol</h1>
-              <h1>Entry</h1>
-              <h1>Exit / Target</h1>
-              <h1>Status</h1>
-              <h1>Settings</h1>
-            </div>
-            {data
-              .sort((a, b) => a.closed - b.closed) //sorts the array so closed trades are shown last
-              .map((item, idx) => {
-                if (!item.closed) return <TradeItem data={item} key={idx} />;
-                else return <TradeItemClosed data={item} key={idx} />;
-              })}
-          </ul>
+    <div className="flex flex-col h-screen bg-gradient-tr from-white to-gray-50 p-2">
+      <div className="h-fit grid grid-cols-1 grid-rows-1 md:grid-cols-8 md:grid-rows-1 gap-2 py-2">
+        <div className="w-full flex flex-col md:col-span-2 ">
+          <div className="mb-2">
+            <Sidebar />
+          </div>
+          <div className="rounded-xl p-2 border bg-gray-100 flex-grow">
+            <Overview />
+          </div>
         </div>
-        <div className="w-1/2 flex flex-col items-center justify-start">
-          <TradeInput />
-          <Overview />
+        <div className="h-full flex flex-grow md:col-start-3 md:col-end-9 ">
+          <TradeTable data={tradesData} />
         </div>
-      </GlobalContext.Provider>
+      </div>
     </div>
   );
 }
