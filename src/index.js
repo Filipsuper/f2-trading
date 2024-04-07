@@ -7,6 +7,7 @@ import Dashboard from "./routes/Dashboard";
 import { ApplicationProvider } from "./providers/ApplicationProvider";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
+import ErrorPage from "./components/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -30,9 +31,11 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <App />,
+        element: <ErrorPage />,
       },
+      {},
     ],
+    errorElement: <ErrorPage />,
   },
 ]);
 
