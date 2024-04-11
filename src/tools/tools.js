@@ -1,6 +1,9 @@
 import axios from "axios";
 
-const API_URL = "http://127.0.0.1:5000";
+const PROD_API = "https://trademaxxer.com/api";
+const DEV_API = "http://127.0.0.1:5000";
+
+const API_URL = DEV_API;
 
 axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use((config) => {
@@ -10,15 +13,26 @@ axios.interceptors.request.use((config) => {
 });
 
 export const get_user_data = async () => {
-  return axios.get("/api/user").then((res) => res.data);
+  return axios.get("/user").then((res) => res.data);
 };
 
 export const get_overview = async (setData, refresh) => {
   try {
-    axios.get("/api/overview").then((res) => setData(res.data));
+    axios.get("/overview").then((res) => setData(res.data));
   } catch {
     refresh();
   }
+};
+
+export const remove_trade = async (trade_data, refresh) => {
+  axios
+    .post("/trades/delete", trade_data)
+    .then((res) => {
+      refresh();
+    })
+    .catch((error) => {
+      console.error("Fetch error:", error);
+    });
 };
 
 export const post_trade = async (trade_data, refresh) => {
@@ -31,16 +45,16 @@ export const post_trade = async (trade_data, refresh) => {
   if (isNew) {
     trade = {
       symbol: symbol,
-      price: price,
+      price: parseFloat(price),
       size: price * Number.parseInt(size / price),
       stop: price - price * TARGET_STOP_PERCENTAGE,
-      target: Number(price) + price * TARGET_STOP_PERCENTAGE,
+      target: parseFloat(price) + price * TARGET_STOP_PERCENTAGE,
       type: "buy",
       closed: false,
     };
   }
   axios
-    .post("/api/trades/add", trade)
+    .post("/trades/add", trade)
     .then((res) => {
       refresh();
     })
@@ -75,7 +89,7 @@ export const update_trade = async (trade_data, refresh) => {
     };
   }
   axios
-    .post("/api/trades/update", trade)
+    .post("/trades/update", trade)
     .then((res) => {
       if (!res.ok) {
         throw new Error(`HTTP error! status: ${res.status}`);
@@ -92,21 +106,21 @@ export const update_trade = async (trade_data, refresh) => {
 
 export const close_trade = async (trade, refresh) => {
   axios
-    .post("/api/trades/close", trade)
+    .post("/trades/close", trade)
     .then((res) => res.data)
     .then(() => refresh());
 };
 
 export const get_trades = async (setData) => {
-  axios.get("/api/trades").then((res) => setData(res.data));
+  axios.get("/trades").then((res) => setData(res.data));
 };
 
 export const get_prices = async (setData) => {
-  axios.get("/api/stock_prices").then((res) => setData(res.data));
+  axios.get("/stock_prices").then((res) => setData(res.data));
 };
 
 export const get_graph_data = async (setData) => {
-  axios.get("/api/graph_data").then((res) => setData(res.data));
+  axios.get("/graph_data").then((res) => setData(res.data));
 };
 
 export const post_login = async (data, refresh) => {
@@ -123,5 +137,5 @@ export const post_login = async (data, refresh) => {
     });
 };
 export const create_account = async (data, refresh) => {
-  return axios.post("/api/user/add", data).then((res) => res.data);
+  return axios.post("/user/add", data).then((res) => res.data);
 };

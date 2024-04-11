@@ -1,6 +1,12 @@
 import React, { useContext, useRef } from "react";
-import { close_trade, post_trade, update_trade } from "../../tools/tools";
+import {
+  close_trade,
+  post_trade,
+  remove_trade,
+  update_trade,
+} from "../../tools/tools";
 import { ApplicationContext } from "../../providers/ApplicationProvider";
+import { Plus, minus } from "react-bootstrap-icons";
 
 export default function Menu({ data }) {
   const price = useRef();
@@ -8,16 +14,8 @@ export default function Menu({ data }) {
   const { refresh } = useContext(ApplicationContext);
   const { symbol, trade_id } = data;
 
-  const delete_trade = (trade_id) => {
-    fetch("http://127.0.0.1:5000/api/trades/delete", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ trade_id: trade_id }), // body data type must match "Content-Type" header
-    })
-      .then((res) => res.json)
-      .then(() => refresh(1));
+  const delete_trade = () => {
+    remove_trade({ trade_id: trade_id }, refresh);
   };
 
   const add_trade = () => {
@@ -42,7 +40,7 @@ export default function Menu({ data }) {
   };
 
   return (
-    <div className="top-10 right-0 absolute bg-white border border-gray-600 shadow-md rounded-md flex flex-col items-center z-10 pt-2">
+    <div className="z-40 top-10 right-0 absolute bg-gray-50 border border-gray-200 shadow-xl rounded-md flex flex-col items-center pt-2">
       <div className="flex flex-row justify-between gap-1 ">
         <input
           type="text"
@@ -52,7 +50,7 @@ export default function Menu({ data }) {
         />
         <input
           type="text"
-          className="w-10 px-1 py-2 text-xs rounded-l-md text-center bg-background-950"
+          className="w-10 px-1 py-2 text-xs rounded-r-md text-center bg-background-950"
           placeholder="Qty"
           ref={qty}
         />

@@ -26,7 +26,7 @@ export default function Dashboard() {
           <Sidebar />
         </div>
         <div className="h-4/5 flex flex-grow">
-          <TradeTable data={tradesData} />
+          <TradeTable data={tradesData} inp={false} />
         </div>
       </div>
       <div className="flex flex-col h-full col-span-3 row-span-3">

@@ -5,16 +5,10 @@ import { Search } from "react-bootstrap-icons";
 import TradeInput from "./TradeInput";
 import { ApplicationContext } from "../providers/ApplicationProvider";
 
-export default function TradeTable() {
+export default function TradeTable({ inp }) {
   const contRef = useRef();
-  const [width, setWidth] = useState(0);
 
   const { tradesData, setTradesData } = useContext(ApplicationContext);
-
-  useEffect(() => {
-    setWidth(contRef.current.offsetWidth);
-    console.log(tradesData);
-  }, []);
 
   const export_trades_to_csv = () => {
     let arr = [
@@ -57,10 +51,11 @@ export default function TradeTable() {
   };
 
   return (
-    <div className="w-full bg-gray-100 border rounded-xl flex flex-col">
+    <div className="w-full h-screen bg-gray-100 border rounded-xl flex flex-col">
       <div ref={contRef} className="h-fit w-full test-parent">
-        {width > 500 ? (
-          <div className="h-10 horizontal justify-end items-center text-md border-b px-2 p-1 ">
+        {inp ? (
+          <div className="h-10 horizontal justify-between items-center text-md border-b px-2 p-1 ">
+            <h1 className="text-gray-400 text-sm">Trade Manager</h1>
             <TradeInput />
           </div>
         ) : null}
@@ -74,8 +69,8 @@ export default function TradeTable() {
         </div>
       </div>
       <ul className="flex overflow-y-scroll shadow-inner">
-        <div className="flex h-full flex-col mt-2 px-2 ">
-          {width > 500
+        <div className="flex h-full flex-col mt-2 px-4 ">
+          {inp
             ? tradesData
                 .sort((a, b) => a.closed - b.closed) //sorts the array so closed trades are shown last
                 .map((item, idx) => {
