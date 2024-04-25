@@ -31,7 +31,7 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col h-full col-span-3 row-span-3">
         <div className="dashboard-content p-4">
-          <div className="bg-white  rounded-xl">
+          <div className="bg-p  rounded-xl">
             <Chart data={graphData} />
           </div>
         </div>

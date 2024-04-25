@@ -4,18 +4,18 @@
 
 @layer base {
     :root {
-      --text: #CFD2E2;
-      --bg: #1A1B20;
-      --p: #131419;
-      --s: #262A31;
-      --a: #54F5C5;
+      --text:  rgb(68, 78, 99);
+      --bg: rgb(209, 212, 226);
+      --p: rgb(222, 224, 234);
+      --s: #f3f4f7;
+      --a: rgb(63, 171, 138);
     }
 
 }
 
 @layer components{
   .debug{
-    @apply border border-red-500;
+    @apply border border-red-500 text-gray-500;
   }
   .horizontal{
     @apply flex flex-row;
@@ -30,13 +30,21 @@
     @apply items-center;
   }
 }
+.height-screen{
+  min-height:         55px;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing:    border-box;
+  -ms-box-sizing:     border-box;
+  -o-box-sizing:      border-box;
+  box-sizing:         border-box;
+}
 
 .window-header{
   @apply w-full text-start text-sm px-2 h-8 flex items-center border-b border-b-neutral-200 bg-neutral-100 text-text 
 }
 
 .App {
-  @apply text-text border-secondary;
+  @apply text-text border-sec;
   text-align: center;
 }
 .cont{
@@ -69,7 +77,7 @@ li{
   border-radius: 1em;
 }
 .dark-input{
-  @apply bg-white p-1
+  @apply p-2 border-none text-text bg-p
 }
 input{
   @apply border border-neutral-200 outline-none;
@@ -88,24 +96,37 @@ button:active{
 }
 .transition-height{
   transition: max-height 1000ms ease-out;
+  
+}
+.trans-op-1500{
+  opacity: 0;
+  animation: fadein 1s normal;
+  animation-delay: 1s;
+  animation-fill-mode: forwards;
 }
 .trans-op-1000{
-  transition: opacity 700ms ease-in-out;
-  transition-delay: 300ms;
+  opacity: 0;
+  animation: fadein 1s normal;
+  animation-delay: 0.5s;
+  animation-fill-mode: forwards;
 }
-
 .trans-op-500{
-  transition: opacity 700ms ease-in-out;
+  animation: fadein 1s normal;
+  animation-fill-mode: forwards;
 }
-
+@keyframes fadein {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
 
 .inp-cont{
   @apply flex flex-row justify-center mt-2 
 }
 .inp-cont input{
-  @apply p-2 rounded-md bg-gray-200 border-gray-300 text-gray-500 ;
-  @apply focus:border-gray-400 transition-colors
+  @apply p-2 rounded-md bg-cool border-bg text-text placeholder:text-gray-400;
+  @apply focus:border-a transition-colors
 }
+
 
 .risk-cont{
   display: flex;
@@ -135,32 +156,81 @@ button:active{
   padding: 0.7em;
   width: 25%;
 }
-
+.gradient-cont{
+  @apply bg-gradient-to-tr from-bg via-bg to-p text-white text-opacity-80 px-2 rounded-md font-bold text-sm
+}
 .win-trade{
-  @apply bg-green-400 text-green-200 p-1 rounded-md font-bold text-sm
+  @apply bg-gradient-to-tr from-a via-a to-p text-white text-opacity-80 px-2 rounded-md font-bold text-sm
 }
 .loss-trade{
-  @apply bg-red-400 text-red-200 p-1 rounded-md font-bold text-sm
+  @apply bg-gradient-to-tr from-red-400 via-red-400 to-white px-2 rounded-md font-bold text-sm text-white
 }
+.pnl-cont{
 
+}
 .navbar{
-  @apply mb-2 h-full w-full rounded-xl border border-gray-400 text-white bg-gray-800 flex justify-start shadow-sm
+  @apply mb-2 h-full w-full text-text flex flex-row md:flex-col justify-start
 }
 .navbar li{
-  @apply w-full h-full ml-0 shadow-none rounded-none  border-b border-gray-700  first:rounded-t-xl hover:bg-gray-900 last:border-0 last:rounded-b-xl hover:cursor-pointer
+  @apply  w-full h-full ml-0 shadow-none rounded-none md:border-b border-sec text-gray-500 hover:text-a   first:rounded-t-xl last:rounded-b-xl last:border-0 hover:cursor-pointer transition-colors;
+  border-image: radial-gradient(circle, rgb(107,114,128,0.5) 0%, rgba(2,0,36,0) 70%) 5;
 }
 .navbar li a{
-  @apply w-full h-full flex justify-start items-center
+  @apply w-full h-full flex justify-center xl:justify-start items-center text-center
 }
 
 .navbar li a span{
-  @apply ml-2
+  @apply ml-2 text-center
 }
 
 .trade-item-cont{
-  @apply col-span-1 row-span-1 bg-gray-100
+  @apply col-span-1 row-span-1 bg-inherit border-inherit;
 }
-
+.bg-cool{
+  background: radial-gradient(circle, var(--bg) 30%, var(--p) 100%);
+}
 .dashboard-content{
-  @apply bg-gray-100 shadow-sm rounded-xl border 
+  @apply bg-p shadow-sm rounded-r-xl border border-sec
+}
+.menu-modal-stats{
+  @apply vertical center-v center-h
+}
+.menu-modal-stats h2{
+  @apply font-bold text-sm
+}
+.menu-modal-stats h1{
+  @apply text-xs
+}
+.s-t-cont{
+  @apply flex flex-col w-full justify-center items-center xl:items-start px-5 rounded-sm bg-inherit
+}
+.s-t-cont h2{
+  @apply bg-p text-xs border-r border-bg
+}
+.s-t-cont input{
+  @apply w-full mt-1 text-center xl:text-start border-x-0 border-t-0 border-b-2 border-bg bg-p pt-1 px-1 text-3xl md:text-xl xl:text-3xl font-bold placeholder:text-text  
+}
+.modify-btn{
+  @apply border px-2 border-bg rounded-md flex flex-row justify-between items-center
+}
+.modify-btn h2{
+  @apply border-r pr-2 mr-2 border-inherit
+}
+.border-gradient{
+  border-image: radial-gradient(circle, rgba(63, 171, 138, 0.8) 10%, rgba(2,0,36,0) 50%) 2;
+}
+.border-gradient-2{
+  border-image: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(2,0,36,0) 95%) 2;
+}
+.border-gradient-3{
+  border-image: linear-gradient(circle, rgb(84, 245, 197,0.1) 0%, rgba(2,0,36,0) 90%) 2;
+}
+.border-gradient-4{
+  border-image: radial-gradient(circle, rgba(197, 204, 208, 0.9) 0%, rgba(2,0,36,0) 90%) 2;
+}
+.shadowglow{
+  box-shadow: -180px 0px 50px -200px rgba(0, 0, 0, 0.208) ;
+}
+.shadowglow2{
+  box-shadow: 180px 0px 50px -200px rgba(0, 0, 0, 0.208) ;
 }

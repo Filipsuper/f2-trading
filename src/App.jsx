@@ -77,18 +77,22 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col h-screen bg-gradient-tr from-white to-gray-50 box-border p-2">
-      <div className="h-fit grid grid-cols-1 grid-rows-1 md:grid-cols-8 md:grid-rows-1 gap-2">
-        <div className="w-full flex flex-col md:col-span-2 ">
-          <div className="mb-2">
+    <div className="flex flex-col md:h-screen bg-bg height-screen p-2 ">
+      <div className="h-full flex flex-col md:grid  md:grid-cols-10 md:grid-rows-1 md:gap-2">
+        <div className="w-full md:flex flex-col justify-between h-full mb-4 md:mb-0 md:col-span-1">
+          <div className="hidden md:flex"></div>
+          <div className="">
             <Sidebar />
           </div>
-          <div className="rounded-xl p-2 border bg-gray-100 flex-grow">
-            <Overview />
+          <div className="hidden md:flex">
+            <Header />
           </div>
         </div>
-        <div className="h-full flex flex-grow md:col-start-3 md:col-end-9 ">
+        <div className="h-full flex mb-4 md:mb-0 flex-grow md:col-start-2 md:col-end-9 ">
           <TradeTable data={tradesData} inp={true} />
+        </div>
+        <div className="flex-grow mb-4 md:mb-0 md:col-start-9 md:col-end-11">
+          <Overview />
         </div>
       </div>
     </div>

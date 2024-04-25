@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { ArrowLeftCircleFill } from "react-bootstrap-icons";
 import { create_account } from "../tools/tools";
 
-export default function Signup({ toggle }) {
+export default function Signup(props) {
   const mailRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const targetRef = useRef();
   const stopRef = useRef();
   const sizeRef = useRef();
@@ -14,9 +15,10 @@ export default function Signup({ toggle }) {
   const [opacity, setOpacity] = useState(false);
   const [next, setNext] = useState(false);
   const [userData, setUserData] = useState({});
+  const { toggle, setMessage } = props;
 
   useEffect(() => {
-    setOpacity(true);
+    setOpacity(!opacity);
   }, []);
 
   const signup = () => {
@@ -33,57 +35,68 @@ export default function Signup({ toggle }) {
       .then(toggle());
   };
 
+  const validate_input_fields = () => {
+    // CHECK IF PASSWORDS ARE MATCHING AND IF INPUTS ARE EMPTY
+    if (passwordConfirmRef.current.value !== passwordRef.current.value) {
+      setMessage("Passwords does not match");
+      return true;
+    } else if (
+      passwordConfirmRef.current.value === "" ||
+      passwordRef.current.value === "" ||
+      mailRef.current.value === ""
+    ) {
+      setMessage("Missing fields");
+      return true;
+    } else return false;
+  };
+
+  const toggle_next = () => {
+    //HANDLE VALIDATION
+    if (validate_input_fields()) return;
+
+    setNext(!next);
+    setUserData({
+      email: mailRef.current.value,
+      password: passwordRef.current.value,
+    });
+  };
+
   const SignUpComp = () => {
     return (
       <>
         <div className="flex items-start mb-2">
           <button
-            className="text-gray-300 flex justify-center text-xl"
-            onClick={() => toggle()}
+            className="text-text flex justify-center text-xl"
+            onClick={() => {
+              toggle();
+            }}
           >
             <ArrowLeftCircleFill />
           </button>
         </div>
-        <h2 className="text-gray-400">F2 Trademaxxer</h2>
+        <h2 className="text-text">F2 Trademaxxer</h2>
         <div className="inp-cont">
           <input ref={mailRef} placeholder="Example@F2.com" type="email" />
         </div>
         <div className="inp-cont">
-          <input
-            ref={passwordRef}
-            onChange={() => {}}
-            placeholder="Password"
-            type="password"
-          />
+          <input ref={passwordRef} placeholder="Password" type="password" />
         </div>
-
-        <div
-          className={
-            "inp-cont  trans-op-500 opacity-0" + (opacity ? "opacity-100" : "")
-          }
-        >
+        <div className="inp-cont">
           <input
-            ref={passwordRef}
+            ref={passwordConfirmRef}
             placeholder="Confirm password"
             type="password"
-            className={
-              "trans-op-500 opacity-0 " + (opacity ? "opacity-100" : "")
-            }
+            className="trans-op-500"
           />
         </div>
 
         <div className="w-full flex flex-row h-full mt-4 items-center justify-center">
           <button
             onClick={() => {
-              setNext(!next);
-              setUserData({
-                email: mailRef.current.value,
-                password: passwordRef.current.value,
-              });
+              toggle_next();
             }}
             className={
-              "text-text  border p-2 w-fit rounded-md border-gray-200 bg-gray-100 hover:border-gray-400  hover:text-gray-500  trans-op-1000  opacity-0 " +
-              (opacity ? "opacity-100" : "")
+              "text-text  border p-2 w-fit rounded-md border-p bg- hover:border-gray-400  hover:text-gray-500  trans-op-1000"
             }
           >
             Next
@@ -98,7 +111,7 @@ export default function Signup({ toggle }) {
       <>
         <div className="flex items-start mb-2">
           <button
-            className="text-gray-300 flex justify-center text-xl"
+            className="text-text flex justify-center text-xl"
             onClick={() => toggle()}
           >
             <ArrowLeftCircleFill />
@@ -109,32 +122,20 @@ export default function Signup({ toggle }) {
           <input ref={targetRef} placeholder="Target %" type="number" />
         </div>
 
-        <div
-          className={
-            "inp-cont  trans-op-500 opacity-0" + (opacity ? "opacity-100" : "")
-          }
-        >
+        <div className={"inp-cont "}>
           <input
             ref={stopRef}
             placeholder="Stop %"
             type="number"
-            className={
-              "h-full trans-op-500 opacity-0 " + (opacity ? "opacity-100" : "")
-            }
+            className={"h-full trans-op-500"}
           />
         </div>
-        <div
-          className={
-            "inp-cont  trans-op-500 opacity-0" + (opacity ? "opacity-100" : "")
-          }
-        >
+        <div className={"inp-cont  "}>
           <input
             ref={sizeRef}
             placeholder="Size (kr)"
             type="text"
-            className={
-              "h-full trans-op-500 opacity-0 " + (opacity ? "opacity-100" : "")
-            }
+            className={"h-full trans-op-1000"}
           />
         </div>
 
@@ -144,8 +145,7 @@ export default function Signup({ toggle }) {
               signup();
             }}
             className={
-              "text-text  border p-2 w-fit rounded-md border-gray-200 bg-gray-100 hover:border-gray-400  hover:text-gray-500  trans-op-1000  opacity-0 " +
-              (opacity ? "opacity-100" : "")
+              "text-text  border p-2 w-fit rounded-md border-p bg-p hover:border-gray-400  hover:text-gray-500  trans-op-1500"
             }
           >
             Sign Up

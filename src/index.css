@@ -4,6 +4,7 @@
 
 body {
   margin: 0;
+  background-color: var(--bg);
   box-sizing:border-box; 
      -moz-box-sizing:border-box; 
      -webkit-box-sizing:border-box; 

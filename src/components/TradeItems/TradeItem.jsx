@@ -5,12 +5,12 @@ import {
   CaretUpFill,
   CaretDownFill,
   PlusCircleFill,
-  ThreeDots,
-  edit,
+  PencilSquare,
 } from "react-bootstrap-icons";
 import Chart from "../Overview/Chart.jsx";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 import { update_trade } from "../../tools/tools.js";
+import Modul from "../Modul.jsx";
 
 export default function TradeItem({ data, live_prices }) {
   const { symbol, size, price, stop, target, trade_id, notes } = data;
@@ -43,9 +43,9 @@ export default function TradeItem({ data, live_prices }) {
 
   const Stats_obj = (props) => {
     return (
-      <div className="flex justify-center h-full w-full bg-white relative">
+      <div className="flex justify-center h-full w-full bg-inherit relative">
         <div className="flex items-start flex-col w-full ">
-          <p className="p-1 text-start  text-xs w-fit h-fit  border-b absolute">
+          <p className="p-1 text-start text-text text-xs w-fit h-fit border-b border-bg absolute">
             {props.text}
           </p>
           <p className="pb-2 mt-2 font-bold text-sm h-full w-full flex justify-center items-center text-center  text-text  ">
@@ -74,66 +74,92 @@ export default function TradeItem({ data, live_prices }) {
 
   const ExtendItem = () => {
     return (
-      <div className="w-full h-72 mt-2 p-2 bg-white rounded-lg">
-        <div className="w-full h-full grid grid-rows-3 grid-cols-3 gap-2">
-          <div className="col-start-1 col-end-2 row-span-3 bg-white rounded-md horizontal center-h h-full border shadow-sm">
+      <div className="w-full h-fit md:h-72 mt-2 p-2 border-inherit rounded-lg bg-p">
+        <div className="w-full h-full grid grid-rows-6 grid-cols-3 gap-6 md:grid-rows-3 md:grid-cols-3 md:gap-2 border-inherit ">
+          <div className="col-span-3 row-start-5 row-end-7 mb-2 md:mb-0 md:col-start-1 md:col-end-2 md:row-span-3 rounded-xl horizontal flex flex-col center-h h-full  border border-dashed border-gradient-2">
             <textarea
-              className="w-full h-full outline-none p-2 resize-none rounded-xl"
-              placeholder="Notes..."
+              className="w-full  h-full outline-none p-2 resize-none rounded-xl text-text bg-p "
+              placeholder="Write some notes..."
               ref={textAreaRef}
             >
               {notes}
             </textarea>
           </div>
-          <div className="flex flex-col w-full justify-start col-start-2 row-start-1 row-end-4 border-r-2 p-2">
-            <div className="h-1/3  bg-white ">
-              <Stats_obj text={"Unrealised pnl"}>
-                <h1 className="text-4xl">{potential_trade.win + "kr"}</h1>
-              </Stats_obj>
+          <div className="flex flex-col w-full justify-start col-span-3 row-span-2 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-4 border-r-2 border-gradient-2 p-2">
+            <div className="h-1/2 flex flex-row items-center justify-around bg-inherit border-b-2 border-gradient-2 pb-4 md:pb-0">
+              <div className="pnl-cont">
+                <p className="text-xs text-text">Potential pnl</p>
+                <h1 className="text-4xl font-bold text-text">
+                  {potential_trade.win + "kr"}
+                </h1>
+              </div>
+              <h2 className="win-trade text-4xl p-2 font-bold text-text">
+                {"+ " + Math.round(size / potential_trade.win) + "%"}
+              </h2>
             </div>
-            <div className="h-2/3">
-              <div className="h-full pb-4">
-                <div className="flex flex-row text-xs w-full border-b ">
-                  <h1 className="w-1/2 border-gray-300 p-1">Stop</h1>
-                  <h1 className="w-1/2 p-1">Target</h1>
+            <div className="flex flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
+              <div className="absolute top-0 right-0">
+                <div className="h-fit flex justify-end items-end">
+                  <button
+                    className="bg-gray-300 text-xs rounded-md text-gray-500"
+                    onClick={() => {
+                      save_data(textAreaRef.current.value);
+                      refresh();
+                    }}
+                  >
+                    Save
+                  </button>
                 </div>
-                <div className="h-full w-full flex flex-row justify-around items-center ">
-                  <input
-                    ref={stopRef}
-                    className="border w-20 bg-gray-50 text-center placeholder-text p-2 rounded-sm border-dashed"
-                    type="text"
-                    placeholder={stop}
-                  />
-
-                  <input
-                    ref={targetRef}
-                    className=" border w-20 bg-gray-50 text-center placeholder-text p-2 rounded-sm border-dashed"
-                    type="text"
-                    placeholder={target}
-                  />
+              </div>
+              <div className="s-t-cont mr-2">
+                <div className="flex flex-row ">
+                  <h2 className="text-text text-start mr-2">Stop</h2>
+                  <h2 className="win-trade text-start">+5%</h2>
                 </div>
+                <input
+                  ref={stopRef}
+                  className=""
+                  type="text"
+                  placeholder={stop + " kr"}
+                />
+              </div>
+              <div className="s-t-cont">
+                <div className="flex flex-row">
+                  <h2 className="text-text text-start mr-2">Target</h2>
+                  <h2 className="loss-trade text-start">-2%</h2>
+                </div>
+                <input
+                  ref={targetRef}
+                  className=""
+                  type="text"
+                  placeholder={target + " kr"}
+                />
               </div>
             </div>
           </div>
 
-          <div className="h-full col-span-1 row-span-3 grid grid-rows-2 grid-cols-3 p-2 ">
-            <div className="trade-item-cont border-r border-b">
-              <Stats_obj text={"Entry"}>{price + " kr"}</Stats_obj>
+          <div className="h-full col-span-3 row-span-2 md:col-span-1 md:row-span-3 grid grid-rows-2 grid-cols-3 p-2 border-bg">
+            <div className="trade-item-cont border-r border-b ">
+              <Stats_obj text={"Entry"}>{Math.round(price) + " kr"}</Stats_obj>
             </div>
-            <div className="trade-item-cont border-r border-b">
+            <div className="trade-item-cont border-r border-b ">
               <Stats_obj text={"Size"}>{size + " kr"}</Stats_obj>
             </div>
-            <div className="trade-item-cont border-b">
-              <Stats_obj text={"Quantity"}>{size / price + " st"}</Stats_obj>
+            <div className="trade-item-cont border-b ">
+              <Stats_obj text={"Quantity"}>
+                {Math.round(size / price) + " st"}
+              </Stats_obj>
             </div>
             <div className="trade-item-cont border-r ">
               <Stats_obj text={"Max loss"}>
-                <p className="text-red-400 ">{potential_trade.loss + " kr"}</p>
+                <p className="text-red-400 ">
+                  {"-" + potential_trade.loss + " kr"}
+                </p>
               </Stats_obj>
             </div>
-            <div className="trade-item-cont border-r">
+            <div className="trade-item-cont border-r ">
               <Stats_obj text={"Max win"}>
-                <p className="text-green-400">{potential_trade.win + " kr"}</p>
+                <p className="text-a">{"+" + potential_trade.win + " kr"}</p>
               </Stats_obj>
             </div>
             <div className="trade-item-cont">
@@ -143,17 +169,6 @@ export default function TradeItem({ data, live_prices }) {
               </Stats_obj>
             </div>
           </div>
-          {/* <div className="h-fit flex justify-end items-end">
-            <button
-              className="bg-gray-300 p-1 rounded-md text-gray-500"
-              onClick={() => {
-                save_data(textAreaRef.current.value);
-                refresh();
-              }}
-            >
-              Save
-            </button>
-          </div> */}
         </div>
       </div>
     );
@@ -164,36 +179,47 @@ export default function TradeItem({ data, live_prices }) {
   };
 
   return (
-    <div className="bg-white w-full flex flex-col justify-center items-center mb-2 rounded-md text-text p-2 relative shadow-sm border border-gray-300 ">
+    <div className="bg-p border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
-        className="w-full grid grid-rows-1 grid-cols-6 gap-2 text-center center-h h-6 hover:cursor-pointer"
+        className="w-full grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-4 md:gap-2 text-center center-h h-20 md:h-14 py-4 hover:cursor-pointer"
         onClick={toggleExtend}
       >
-        <h1 className="font-bold text-gray-900">{symbol}</h1>
+        <h1 className="font-bold text-text">{symbol}</h1>
         <h1>{Math.round(price)}</h1>
         <h1>{target}</h1>
         <div className="vertical center-h">
           <h1 className="font-bold text-sm win-trade">win</h1>
         </div>
         <h1 className="font-bold">{Math.round(size / price)}</h1>
-        <div className="horizontal  center-v justify-end">
+        <div className="horizontal center-v justify-end">
           <button
-            className="text-2xl text-gray-600 mr-2"
+            className="modify-btn text-sm text-gray-600 mr-2"
             onClick={(e) => {
               e.stopPropagation();
               setShowContextMenu(!showContextMenu);
             }}
           >
-            <ThreeDots />
+            <h2>
+              <PencilSquare />
+            </h2>
+            <div className="">Modify</div>
           </button>
-          <button className="text-xl text-text">
+          <button className="text-xl text-a">
             {extend ? <CaretUpFill /> : <CaretDownFill />}
           </button>
         </div>
       </div>
-      <div className="w-full">{extend ? <ExtendItem /> : null}</div>
+      <div className="w-full border-inherit text-a">
+        {extend ? <ExtendItem /> : null}
+      </div>
       {showContextMenu ? (
-        <Menu refresh={refresh} data={{ symbol, trade_id }} />
+        <Modul
+          header={"Manage " + symbol}
+          show={showContextMenu}
+          setShow={setShowContextMenu}
+        >
+          <Menu refresh={refresh} data={{ symbol, trade_id, size, price }} />
+        </Modul>
       ) : null}
     </div>
   );

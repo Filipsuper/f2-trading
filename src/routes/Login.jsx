@@ -11,6 +11,7 @@ export default function Login() {
   const { refresh } = useContext(ApplicationContext);
   const mailRef = useRef();
   const passwordRef = useRef();
+  const passwordConfirmRef = useRef();
   const [opacity, setOpacity] = useState(false);
 
   useEffect(() => {
@@ -36,28 +37,27 @@ export default function Login() {
   };
 
   return (
-    <main className="h-screen w-full horizontal center-v center-h bg-gradient-to-tr from-gray-100 to-gray-200 ">
+    <main className="h-screen w-full horizontal center-v center-h bg-gradient-to-tr from-p to-bg overflow-hidden">
       <div className="absolute">
-        <h1 className="text-[800px] font-bold italic text-gray-200 -z-0 ">
+        <h1 className="hidden md:flex text-[500px] font-bold italic text-bg -z-0 ">
           F2
         </h1>
       </div>
       <div
         className={
-          "z-0 min-w-fit p-10 flex flex-col bg-gray-100 border border-gray-300 rounded-xl shadow-sm transition-height " +
+          "z-0 min-w-fit p-10 flex flex-col bg-p border rounded-xl border-gradient-3 shadow-md transition-height " +
           (signup ? "max-h-96" : "max-h-72")
         }
       >
         {!signup ? (
           <>
-            <h2 className="text-gray-400">F2 trademaxxer</h2>
+            <h2 className="text-text">F2 Trademaxxer</h2>
             <div className="inp-cont">
               <input ref={mailRef} placeholder="Example@F2.com" type="text" />
             </div>
             <div className="inp-cont">
               <input ref={passwordRef} placeholder="Password" type="password" />
             </div>
-            <p className="text-xs mt-2 text-red-300">{message}</p>
 
             <p className="text-xs underline text-blue-400">
               <button
@@ -69,14 +69,13 @@ export default function Login() {
               </button>
             </p>
 
-            <div className="w-full vertical center-h">
+            <div className="w-full vertical center-h mt-4">
               <button
                 onClick={() => {
                   log_in();
                 }}
                 className={
-                  "text-text border p-2 w-fit rounded-md border-gray-200 bg-gray-100 hover:border-gray-400  hover:text-gray-400 transition-color trans-op opacity-0 " +
-                  (opacity ? "opacity-100" : "")
+                  "text-text p-2 w-fit rounded-md bg-p hover:text-a trans-op-500"
                 }
               >
                 Log in
@@ -84,8 +83,9 @@ export default function Login() {
             </div>
           </>
         ) : (
-          <Signup toggle={toggle_signup} />
+          <Signup toggle={toggle_signup} setMessage={setMessage} />
         )}
+        <p className="text-xs mt-2 text-red-300 flex flex-wrap">{message}</p>
       </div>
     </main>
   );

@@ -5,10 +5,10 @@ module.exports = {
     extend: {
       colors: {
         text: "var(--text)",
-        background: "var(--bg)",
-        primary: "var(--p)",
-        secondary: "var(--s)",
-        accent: "var(--a)",
+        bg: "var(--bg)",
+        p: "var(--p)",
+        sec: "var(--s)",
+        a: "var(--a)",
       },
     },
   },

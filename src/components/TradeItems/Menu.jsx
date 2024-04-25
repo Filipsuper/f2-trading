@@ -9,10 +9,10 @@ import { ApplicationContext } from "../../providers/ApplicationProvider";
 import { Plus, minus } from "react-bootstrap-icons";
 
 export default function Menu({ data }) {
-  const price = useRef();
+  const priceRef = useRef();
   const qty = useRef();
   const { refresh } = useContext(ApplicationContext);
-  const { symbol, trade_id } = data;
+  const { symbol, trade_id, size, price } = data;
 
   const delete_trade = () => {
     remove_trade({ trade_id: trade_id }, refresh);
@@ -21,7 +21,7 @@ export default function Menu({ data }) {
   const add_trade = () => {
     let trade_data = {
       symbol: symbol,
-      price: price.current.value,
+      price: priceRef.current.value,
       qty: qty.current.value,
       isNew: false,
       trade_id: trade_id,
@@ -32,7 +32,7 @@ export default function Menu({ data }) {
   const toggle_close_trade = () => {
     let trade_data = {
       symbol: symbol,
-      price: price.current.value,
+      price: priceRef.current.value,
       quantity: qty.current.value,
       trade_id: trade_id,
     };
@@ -40,54 +40,71 @@ export default function Menu({ data }) {
   };
 
   return (
-    <div className="z-40 top-10 right-0 absolute bg-gray-50 border border-gray-200 shadow-xl rounded-md flex flex-col items-center pt-2">
-      <div className="flex flex-row justify-between gap-1 ">
-        <input
-          type="text"
-          className="w-10 px-1 py-2 text-xs rounded-l-md text-center bg-background-950"
-          placeholder="Price"
-          ref={price}
-        />
-        <input
-          type="text"
-          className="w-10 px-1 py-2 text-xs rounded-r-md text-center bg-background-950"
-          placeholder="Qty"
-          ref={qty}
-        />
+    <div className="flex flex-col  justify-center items-center p-2 ">
+      <h1 className="text-start">Current data:</h1>
+      <div className="grid grid-cols-2 grid-rows-1 gap-2 w-full border rounded-md mb-2 p-4">
+        <div className="menu-modal-stats">
+          <h1>Size:</h1>
+          <h2>{size}</h2>
+        </div>
+        <div className="menu-modal-stats">
+          <h1>Qty:</h1>
+          <h2>{Math.round(size / price)}</h2>
+        </div>
       </div>
+      <div className="flex w-5/6 flex-row justify-between">
+        <div className="w-1/2">
+          <h2 className="rounded-t-md p-1 text-xs">Price:</h2>
+          <input
+            type="text"
+            className="w-full p-2 text-md text-center bg-bg border-0 border-r placeholder:text-text"
+            placeholder="0"
+            ref={priceRef}
+          />
+        </div>
+        <div className="w-1/2">
+          <h2 className="  rounded-t-md p-1 text-xs">Qty:</h2>
+          <input
+            type="text"
+            className="w-full p-2 text-md  text-center bg-bg border-0 placeholder:text-text"
+            placeholder="0"
+            ref={qty}
+          />
+        </div>
+      </div>
+      <li className=" shadow-none w-full ">
+        <div className="flex flex-col w-full">
+          <div className="flex flex-row w-full h-10 justify-around">
+            <button
+              onClick={() => {
+                add_trade();
+              }}
+              className="bg-green-500 w-1/2 font-normal text-green-200 text-sm rounded-tl-md"
+            >
+              Buy
+            </button>
+            <button
+              onClick={() => toggle_close_trade()}
+              className="bg-red-500 w-1/2 font-normal text-red-200 text-sm rounded-tr-md"
+            >
+              Sell
+            </button>
+          </div>
 
-      <li className="bg-background-900 p-2 shadow-none w-full ">
-        <button
-          onClick={() => {
-            add_trade();
-          }}
-          className="bg-background-950 p-1 font-normal text-green-700 text-sm w-full"
-        >
-          Add
-        </button>
-      </li>
-      <li className="bg-background-900 p-2 pt-0 shadow-none w-full ">
-        <button
-          onClick={() => toggle_close_trade()}
-          className="bg-red-100 p-1 font-normal text-red-700 text-sm w-full"
-        >
-          Sell
-        </button>
+          <button
+            onClick={() => toggle_close_trade()}
+            className="bg-p p-1 font-normal text-text text-xs border border-sec rounded-b-md shadow-md"
+          >
+            Sell all {Math.round(size / price)}
+          </button>
+        </div>
       </li>
       <li className=" p-2 pt-0 shadow-none w-full ">
         <button
           onClick={() => delete_trade(trade_id)}
-          className="bg-background-950 p-1 font-normal text-black text-sm w-full"
+          className="w-full p-1 font-normal text-red-500 text-sm"
         >
           Delete
-        </button>
-      </li>
-      <li className="bg-background-900 p-2 pt-0 shadow-none w-full ">
-        <button
-          onClick={() => toggle_close_trade()}
-          className="bg-gray-700 p-1 font-normal text-white text-sm w-full"
-        >
-          Sell All
         </button>
       </li>
     </div>

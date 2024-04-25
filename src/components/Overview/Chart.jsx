@@ -59,10 +59,10 @@ export default function Chart({ data }) {
   }, [data]);
 
   return (
-    <div className="w-full  vertical center-h p-4 ">
+    <div className="w-full vertical center-h p-4">
       <div className="w-full flex flex-row justify-between">
-        <h1 className=" ">Equity</h1>
-        <h2 className=" font-bold">{pnl} kr</h2>
+        <h1 className="text-text ">Equity</h1>
+        <h2 className="text-a font-bold">{pnl} kr</h2>
       </div>
 
       <canvas

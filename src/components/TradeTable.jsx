@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from "react";
 import TradeItem from "./TradeItems/TradeItem";
 import TradeItemClosed from "./TradeItems/TradeItemClosed";
-import { Search } from "react-bootstrap-icons";
+import { ArrowLeft, Search, Sliders } from "react-bootstrap-icons";
 import TradeInput from "./TradeInput";
 import { ApplicationContext } from "../providers/ApplicationProvider";
 
@@ -51,15 +51,14 @@ export default function TradeTable({ inp }) {
   };
 
   return (
-    <div className="w-full h-screen bg-gray-100 border rounded-xl flex flex-col">
-      <div ref={contRef} className="h-fit w-full test-parent">
+    <div className="w-full h-full flex flex-col border bg-cool rounded-md border-gradient-2 shadowglow">
+      <div ref={contRef} className="h-fit w-full test-parent border-bg">
         {inp ? (
-          <div className="h-10 horizontal justify-between items-center text-md border-b px-2 p-1 ">
-            <h1 className="text-gray-400 text-sm">Trade Manager</h1>
+          <div className="h-10 horizontal w-full items-center text-md border-b border-inherit px-2 p-1 ">
             <TradeInput />
           </div>
         ) : null}
-        <div className="h-fit horizontal text-xs center-h grid grid-rows-1 grid-cols-6 gap-2 text-center p-2 px-2 ">
+        <div className="h-fit text-text horizontal text-xs center-h grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-2 text-center p-2 px-2 ">
           <h1>Symbol</h1>
           <h1>Entry</h1>
           <h1>Exit / Target</h1>
@@ -68,8 +67,8 @@ export default function TradeTable({ inp }) {
           <h1>Settings</h1>
         </div>
       </div>
-      <ul className="flex overflow-y-scroll shadow-inner">
-        <div className="flex h-full flex-col mt-2 px-4 ">
+      <ul className="flex flex-grow overflow-y-scroll bg-inherit border-bg">
+        <div className="flex h-full flex-col px-2 border-inherit">
           {inp
             ? tradesData
                 .sort((a, b) => a.closed - b.closed) //sorts the array so closed trades are shown last
@@ -85,9 +84,9 @@ export default function TradeTable({ inp }) {
                 })}
         </div>
       </ul>
-      <div className="border-t text-sm p-2 horizontal center-h justify-end text-gray-400">
+      <div className="border-t border-bg text-sm p-2 horizontal center-h justify-end text-text">
         <button
-          className="border-l pl-2  hover:text-gray-800 hover:cursor-pointer"
+          className="border-l border-inherit pl-2  hover:text-a hover:cursor-pointer"
           onClick={() => {
             export_trades_to_csv();
           }}
