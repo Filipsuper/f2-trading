@@ -37,9 +37,14 @@ export const remove_trade = async (trade_data, refresh) => {
 };
 
 export const post_trade = async (trade_data, refresh) => {
-  const { symbol, price, qty, isNew, size } = trade_data;
+  const { symbol, price, qty, isNew, size, target, stop } = trade_data;
 
   const TARGET_STOP_PERCENTAGE = 0.1;
+
+  let trade_target = target
+    ? target
+    : parseFloat(price) + price * TARGET_STOP_PERCENTAGE;
+  let trade_stop = stop ? stop : price - price * TARGET_STOP_PERCENTAGE;
 
   let trade = {};
 
@@ -48,8 +53,8 @@ export const post_trade = async (trade_data, refresh) => {
       symbol: symbol,
       price: parseFloat(price),
       size: price * Number.parseInt(size / price),
-      stop: price - price * TARGET_STOP_PERCENTAGE,
-      target: parseFloat(price) + price * TARGET_STOP_PERCENTAGE,
+      stop: trade_stop,
+      target: trade_target,
       type: "buy",
       closed: false,
     };

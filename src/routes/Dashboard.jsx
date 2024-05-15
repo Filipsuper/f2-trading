@@ -20,7 +20,7 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <main className="h-screen grid grid-rows-4 grid-cols-8 p-2 gap-2 py-4">
+    <main className="h-screen flex-col md:grid md:grid-rows-4 md:grid-cols-8 p-2 gap-2 py-4">
       <div className="h-full col-start-1 col-end-3 row-span-4">
         <div className="mb-2">
           <Sidebar />
@@ -31,9 +31,10 @@ export default function Dashboard() {
       </div>
       <div className="flex flex-col h-full col-span-3 row-span-3">
         <div className="dashboard-content p-4">
-          <div className="bg-p  rounded-xl">
+          {/* <div className="bg-p  rounded-xl">
             <Chart data={graphData} />
-          </div>
+          </div> */}
+          In progress...
         </div>
       </div>
     </main>

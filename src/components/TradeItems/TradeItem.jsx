@@ -74,11 +74,11 @@ export default function TradeItem({ data, live_prices }) {
 
   const ExtendItem = () => {
     return (
-      <div className="w-full h-fit md:h-72 mt-2 p-2 border-inherit rounded-lg bg-p">
+      <div className="w-full h-fit md:h-72 mt-2 p-2 border-inherit rounded-lg bg-sec">
         <div className="w-full h-full grid grid-rows-6 grid-cols-3 gap-6 md:grid-rows-3 md:grid-cols-3 md:gap-2 border-inherit ">
           <div className="col-span-3 row-start-5 row-end-7 mb-2 md:mb-0 md:col-start-1 md:col-end-2 md:row-span-3 rounded-xl horizontal flex flex-col center-h h-full  border border-dashed border-gradient-2">
             <textarea
-              className="w-full  h-full outline-none p-2 resize-none rounded-xl text-text bg-p "
+              className="w-full  h-full outline-none p-2 resize-none rounded-xl text-text bg-sec"
               placeholder="Write some notes..."
               ref={textAreaRef}
             >
@@ -94,7 +94,7 @@ export default function TradeItem({ data, live_prices }) {
                 </h1>
               </div>
               <h2 className="win-trade text-4xl p-2 font-bold text-text">
-                {"+ " + Math.round(size / potential_trade.win) + "%"}
+                {"+ " + Math.round((potential_trade.win / size) * 100) + "%"}
               </h2>
             </div>
             <div className="flex flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
@@ -114,7 +114,9 @@ export default function TradeItem({ data, live_prices }) {
               <div className="s-t-cont mr-2">
                 <div className="flex flex-row ">
                   <h2 className="text-text text-start mr-2">Stop</h2>
-                  <h2 className="win-trade text-start">+5%</h2>
+                  <h2 className="loss-trade text-start">
+                    {"-" + Math.round(((price - stop) / price) * 100) + "%"}
+                  </h2>
                 </div>
                 <input
                   ref={stopRef}
@@ -126,7 +128,10 @@ export default function TradeItem({ data, live_prices }) {
               <div className="s-t-cont">
                 <div className="flex flex-row">
                   <h2 className="text-text text-start mr-2">Target</h2>
-                  <h2 className="loss-trade text-start">-2%</h2>
+                  <h2 className="win-trade text-start">
+                    {" "}
+                    {Math.round(((target - price) / price) * 100) + "%"}
+                  </h2>
                 </div>
                 <input
                   ref={targetRef}
@@ -143,7 +148,7 @@ export default function TradeItem({ data, live_prices }) {
               <Stats_obj text={"Entry"}>{Math.round(price) + " kr"}</Stats_obj>
             </div>
             <div className="trade-item-cont border-r border-b ">
-              <Stats_obj text={"Size"}>{size + " kr"}</Stats_obj>
+              <Stats_obj text={"Size"}>{Math.round(size) + " kr"}</Stats_obj>
             </div>
             <div className="trade-item-cont border-b ">
               <Stats_obj text={"Quantity"}>
@@ -179,7 +184,7 @@ export default function TradeItem({ data, live_prices }) {
   };
 
   return (
-    <div className="bg-p border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
+    <div className="bg-sec border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
         className="w-full grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-4 md:gap-2 text-center center-h h-20 md:h-14 py-4 hover:cursor-pointer"
         onClick={toggleExtend}

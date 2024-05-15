@@ -96,7 +96,7 @@ export default function Signup(props) {
               toggle_next();
             }}
             className={
-              "text-text  border p-2 w-fit rounded-md border-p bg- hover:border-gray-400  hover:text-gray-500  trans-op-1000"
+              "text-text p-2 w-fit rounded-md  bg-sec hover:text-a  trans-op-1000"
             }
           >
             Next
@@ -145,7 +145,7 @@ export default function Signup(props) {
               signup();
             }}
             className={
-              "text-text  border p-2 w-fit rounded-md border-p bg-p hover:border-gray-400  hover:text-gray-500  trans-op-1500"
+              "text-text p-2 w-fit rounded-md bg-sec hover:text-a trans-op-1500"
             }
           >
             Sign Up

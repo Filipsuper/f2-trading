@@ -8,6 +8,8 @@ import { ApplicationProvider } from "./providers/ApplicationProvider";
 import Login from "./routes/Login";
 import Signup from "./routes/Signup";
 import ErrorPage from "./components/ErrorPage";
+import Calendar from "./routes/Calendar";
+import CalculatorRoute from "./routes/CalculatorRoute";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +30,14 @@ const router = createBrowserRouter([
       {
         path: "/Signup",
         element: <Signup />,
+      },
+      {
+        path: "/Calendar",
+        element: <Calendar />,
+      },
+      {
+        path: "/Calculator",
+        element: <CalculatorRoute />,
       },
       {
         path: "*",

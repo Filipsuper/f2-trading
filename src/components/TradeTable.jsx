@@ -7,6 +7,7 @@ import { ApplicationContext } from "../providers/ApplicationProvider";
 
 export default function TradeTable({ inp }) {
   const contRef = useRef();
+  const [isDataLoading, setIsDataLoading] = useState(false);
 
   const { tradesData, setTradesData } = useContext(ApplicationContext);
 
@@ -50,8 +51,12 @@ export default function TradeTable({ inp }) {
     window.open(encodedUri);
   };
 
+  useEffect(() => {
+    setIsDataLoading(false);
+  }, tradesData);
+
   return (
-    <div className="w-full h-full flex flex-col border bg-cool rounded-md border-gradient-2 shadowglow">
+    <div className="w-full h-full flex flex-col border bg-p rounded-md border-gradient-2 shadowglow">
       <div ref={contRef} className="h-fit w-full test-parent border-bg">
         {inp ? (
           <div className="h-10 horizontal w-full items-center text-md border-b border-inherit px-2 p-1 ">
@@ -82,6 +87,20 @@ export default function TradeTable({ inp }) {
                   if (item.closed)
                     return <TradeItemClosed data={item} key={idx} />;
                 })}
+
+          {isDataLoading ? (
+            <>
+              <div className="w-full h-64 mt-4 bg-sec rounded-sm horizontal center-h center-v p-4 ">
+                <span class="loader animate-spin"></span>
+              </div>
+              <div className="w-full h-28 mt-4 bg-sec rounded-sm horizontal center-h center-v p-4 ">
+                <span class="loader animate-spin"></span>
+              </div>
+              <div className="w-full h-28 mt-4 bg-sec rounded-sm horizontal center-h center-v p-4 ">
+                <span class="loader animate-spin"></span>
+              </div>
+            </>
+          ) : null}
         </div>
       </ul>
       <div className="border-t border-bg text-sm p-2 horizontal center-h justify-end text-text">

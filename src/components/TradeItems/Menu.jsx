@@ -41,7 +41,7 @@ export default function Menu({ data }) {
 
   return (
     <div className="flex flex-col  justify-center items-center p-2 ">
-      <h1 className="text-start">Current data:</h1>
+      <h1 className="text-start">Current trade:</h1>
       <div className="grid grid-cols-2 grid-rows-1 gap-2 w-full border rounded-md mb-2 p-4">
         <div className="menu-modal-stats">
           <h1>Size:</h1>
@@ -91,12 +91,12 @@ export default function Menu({ data }) {
             </button>
           </div>
 
-          <button
+          {/* <button
             onClick={() => toggle_close_trade()}
             className="bg-p p-1 font-normal text-text text-xs border border-sec rounded-b-md shadow-md"
           >
             Sell all {Math.round(size / price)}
-          </button>
+          </button> */}
         </div>
       </li>
       <li className=" p-2 pt-0 shadow-none w-full ">

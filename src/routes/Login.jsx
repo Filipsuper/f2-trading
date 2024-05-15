@@ -45,7 +45,7 @@ export default function Login() {
       </div>
       <div
         className={
-          "z-0 min-w-fit p-10 flex flex-col bg-p border rounded-xl border-gradient-3 shadow-md transition-height " +
+          "z-0 min-w-fit p-10 flex flex-col bg-sec border rounded-xl border-gradient-3 shadow-md transition-height " +
           (signup ? "max-h-96" : "max-h-72")
         }
       >
@@ -53,10 +53,21 @@ export default function Login() {
           <>
             <h2 className="text-text">F2 Trademaxxer</h2>
             <div className="inp-cont">
-              <input ref={mailRef} placeholder="Example@F2.com" type="text" />
+              <input
+                ref={mailRef}
+                name="email"
+                autoComplete="email"
+                placeholder="Example@F2.com"
+                type="text"
+              />
             </div>
             <div className="inp-cont">
-              <input ref={passwordRef} placeholder="Password" type="password" />
+              <input
+                ref={passwordRef}
+                autoComplete="current-password"
+                placeholder="Password"
+                type="password"
+              />
             </div>
 
             <p className="text-xs underline text-blue-400">
@@ -75,7 +86,7 @@ export default function Login() {
                   log_in();
                 }}
                 className={
-                  "text-text p-2 w-fit rounded-md bg-p hover:text-a trans-op-500"
+                  "text-text p-2 w-fit rounded-md bg-sec hover:text-a trans-op-500"
                 }
               >
                 Log in
