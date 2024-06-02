@@ -170,10 +170,10 @@ button:active{
   @apply bg-gradient-to-tr from-bg via-bg to-p text-white text-opacity-80 px-2 rounded-md font-bold text-sm
 }
 .win-trade{
-  @apply bg-gradient-to-tr from-a via-a to-p text-white text-opacity-80 px-2 rounded-md font-bold text-sm
+  @apply bg-gradient-to-tr from-a via-a to-p text-white text-opacity-80 px-2 rounded-md font-bold 
 }
 .loss-trade{
-  @apply bg-gradient-to-tr from-red-400 via-red-400 to-white px-2 rounded-md font-bold text-sm text-white
+  @apply bg-gradient-to-tr from-red-400 via-red-400 to-white px-2 rounded-md font-bold  text-white
 }
 .pnl-cont{
 
@@ -200,7 +200,7 @@ button:active{
   background: radial-gradient(circle, var(--bg) 30%, var(--p) 100%);
 }
 .dashboard-content{
-  @apply bg-p shadow-sm rounded-r-xl border border-sec
+  @apply flex justify-center items-center bg-p shadow-sm rounded-r-xl border border-sec
 }
 .menu-modal-stats{
   @apply vertical center-v center-h
@@ -212,19 +212,19 @@ button:active{
   @apply text-xs
 }
 .s-t-cont{
-  @apply flex flex-col w-full justify-center items-center xl:items-start px-5 rounded-sm bg-inherit
+  @apply flex flex-col w-full justify-center items-center xl:items-center px-5 rounded-sm bg-inherit
 }
 .s-t-cont h2{
-  @apply bg-p text-xs border-r border-bg
+  @apply bg-sec text-xs
 }
 .s-t-cont input{
-  @apply w-full mt-1 text-center xl:text-start border-x-0 border-t-0 border-b-2 border-bg bg-p pt-1 px-1 text-3xl md:text-xl xl:text-3xl font-bold placeholder:text-text  
+  @apply w-full md:w-2/3 lg:w-full mt-1 text-center  bg-p rounded-md pt-1 px-1 text-2xl md:text-xl xl:text-2xl font-bold placeholder:text-text  
 }
 .modify-btn{
-  @apply border px-2 border-bg rounded-md flex flex-row justify-between items-center
+  @apply border h-full border-bg rounded-md flex flex-col justify-center md:justify-between items-center
 }
 .modify-btn h2{
-  @apply border-r pr-2 mr-2 border-inherit
+  @apply p-1  border-inherit
 }
 .border-gradient{
   border-image: radial-gradient(circle, rgba(63, 171, 138, 0.8) 10%, rgba(2,0,36,0) 50%) 2;
@@ -246,10 +246,25 @@ button:active{
 }
 .loader {
   width: 20px;
-    height: 20px;
-    border: 4px solid #d6dce1;
-    border-bottom-color: transparent;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-  }
+  height: 20px;
+  border: 4px solid #d6dce1;
+  border-bottom-color: transparent;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+}
+.dashboard-cont{
+  @apply h-full rounded-md border border-gradient-2 md:mb-0 shadow-md
+}
+.btn-cont{
+  @apply flex flex-row items-center 
+}
+.btn-cont h2{
+  @apply text-xs border-l p-1
+}
+.menu-inp-cont{
+  @apply horizontal center-h bg-bg rounded-md;
+}
+.menu-inp-cont h1{
+  @apply pl-4 text-text w-fit text-center;
+}

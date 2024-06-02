@@ -17,7 +17,7 @@ export default function Chart({ data }) {
 
     //STYLING:
     ctx.lineWidth = 5;
-    ctx.strokeStyle = "#48f542"; // Line color
+    ctx.strokeStyle = "#3fab8a"; // Line color
     ctx.lineCap = "round"; // Line cap style
     ctx.lineJoin = "round"; // Line join style
     ctx.setLineDash([]); // Solid line
@@ -25,7 +25,7 @@ export default function Chart({ data }) {
     ctx.shadowBlur = 5; // Shadow blur
     ctx.shadowOffsetX = 1; // Shadow X offset
     ctx.shadowOffsetY = 1; // Shadow Y offset
-    ctx.fillStyle = "rgba(100, 255, 97, 0.1)";
+    ctx.fillStyle = "rgba(63, 171, 138, 0.1)";
 
     if (x != undefined) {
       let maxX = Math.max(...x);
@@ -53,22 +53,31 @@ export default function Chart({ data }) {
   };
 
   useEffect(() => {
-    console.log(data);
-    plot_chart(canvasRef.current.getContext("2d"), data["x"], data["y"]);
-    if (data["y"] != undefined) setPnl(data["y"][data["y"].length - 1]);
+    console.log(data["pnl"]);
+    let pnl_mutable = 0;
+    let pnl_arr = [];
+    if (data["pnl"] === undefined) return;
+    data["pnl"].map((elem) => {
+      pnl_mutable += elem;
+      // pnl_arr.push(pnl_mutable);
+    });
+
+    setPnl(pnl);
+    // plot_chart(canvasRef.current.getContext("2d"), data["pnl"], data["pnl"]);
+
+    // if (data["pnl"] != undefined) setPnl(data["y"][data["y"].length - 1]);
   }, [data]);
 
   return (
-    <div className="w-full vertical center-h p-4">
+    <div className="w-full h-full vertical center-h p-4">
       <div className="w-full flex flex-row justify-between">
         <h1 className="text-text ">Equity</h1>
         <h2 className="text-a font-bold">{pnl} kr</h2>
       </div>
-
       <canvas
-        width={1000}
+        width={800}
         height={500}
-        className="px-2 mt-2 w-full pt-2 rounded-t-md"
+        className="px-2 mt-2 w-full pt-2"
         ref={canvasRef}
       ></canvas>
     </div>

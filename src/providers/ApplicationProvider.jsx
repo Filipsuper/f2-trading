@@ -2,6 +2,7 @@ import React, { useState, createContext, useCallback, useContext } from "react";
 import {
   get_graph_data,
   get_overview,
+  get_set_data,
   get_trades,
   get_user_data,
 } from "../tools/tools";
@@ -16,10 +17,10 @@ export const ApplicationProvider = () => {
   const [user, setUser] = useState("test");
 
   const refresh = useCallback(() => {
-    get_trades(setTradesData);
-    get_overview(setOverviewData);
-    get_graph_data(setGraphData);
-    get_user_data().then((res) => setUser(res));
+    get_set_data("/trades", setTradesData);
+    get_set_data("/overview", setOverviewData);
+    get_set_data("/graph_data", setGraphData);
+    get_set_data("/user", setUser);
   }, []);
 
   return (

@@ -78,7 +78,7 @@ function App() {
 
   return (
     <div className="flex flex-col md:h-screen bg-bg height-screen p-2 ">
-      <div className="h-full flex flex-col md:grid  md:grid-cols-10 md:grid-rows-1 md:gap-2">
+      <div className="h-full flex flex-col md:grid md:grid-cols-10 md:grid-rows-1 md:gap-2">
         <div className="w-full md:flex flex-col justify-between h-full mb-4 md:mb-0 md:col-span-1">
           <div className="hidden md:flex"></div>
           <div className="">
@@ -88,10 +88,10 @@ function App() {
             <Header />
           </div>
         </div>
-        <div className="h-full flex mb-4 md:mb-0 flex-grow md:col-start-2 md:col-end-9 ">
+        <div className="h-full flex items-center mb-4 md:mb-0 flex-grow md:col-start-2 md:col-end-11 lg:col-end-9 bg-p rounded-md shadowglow">
           <TradeTable data={tradesData} inp={true} />
         </div>
-        <div className="flex-grow mb-4 md:mb-0 md:col-start-9 md:col-end-11">
+        <div className="flex-grow mb-4 md:hidden lg:flex lg:mb-0 lg:col-start-9 lg:col-end-11">
           <Overview />
         </div>
       </div>

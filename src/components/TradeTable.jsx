@@ -56,13 +56,20 @@ export default function TradeTable({ inp }) {
   }, tradesData);
 
   return (
-    <div className="w-full h-full flex flex-col border bg-p rounded-md border-gradient-2 shadowglow">
-      <div ref={contRef} className="h-fit w-full test-parent border-bg">
+    <div className="w-full h-full flex flex-col border bg-inherit rounded-md border-gradient-2 ">
+      <div
+        ref={contRef}
+        className="h-fit w-full test-parent border-b border-bg"
+      >
         {inp ? (
           <div className="h-10 horizontal w-full items-center text-md border-b border-inherit px-2 p-1 ">
             <TradeInput />
           </div>
-        ) : null}
+        ) : (
+          <div className="w-full p-1 border-b border-bg">
+            <h1 className="text-text">Trade logg</h1>
+          </div>
+        )}
         <div className="h-fit text-text horizontal text-xs center-h grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-2 text-center p-2 px-2 ">
           <h1>Symbol</h1>
           <h1>Entry</h1>
@@ -73,10 +80,11 @@ export default function TradeTable({ inp }) {
         </div>
       </div>
       <ul className="flex flex-grow overflow-y-scroll bg-inherit border-bg">
-        <div className="flex h-full flex-col px-2 border-inherit">
+        <div className="flex h-full flex-col px-2 border-inherit py-2">
           {inp
             ? tradesData
-                .sort((a, b) => a.closed - b.closed) //sorts the array so closed trades are shown last
+                //sorts the array so closed trades are shown last
+                .sort((a, b) => a.closed - b.closed)
                 .map((item, idx) => {
                   if (!item.closed) return <TradeItem data={item} key={idx} />;
                   else return <TradeItemClosed data={item} key={idx} />;

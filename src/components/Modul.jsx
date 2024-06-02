@@ -8,8 +8,8 @@ export default function Modul(props) {
 
   return (
     <div className="absolute z-50 right-0 top-0 bg-opacity-20 bg-black w-full h-screen horizontal center-h center-v">
-      <div className="flex flex-col  top-1/3 bg-p backdrop-blur-md   border border-gradient-2 shadow-xl rounded-md p-1 max-w-6xl">
-        <div className="flex flex-row h-4 justify-between items-center border-b border-gradient-2 p-2 pb-3">
+      <div className="flex flex-col  top-1/3 bg-p backdrop-blur-md border border-gradient-3 shadow-xl rounded-md p-1">
+        <div className="flex flex-row h-6 justify-between items-center border-b border-gradient-4 p-2 pb-2">
           <h1 className="text-sm">{header}</h1>
           <div>
             <button

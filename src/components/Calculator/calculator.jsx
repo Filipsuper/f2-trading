@@ -198,7 +198,7 @@ export default function Calculator() {
           <div className=" inp-cont-2 w-full leverage">
             <div className="inp-cont-2">
               <div className="text-div">
-                <h2 className=" md:flex hidden">Levrage</h2>
+                <h2 className=" md:flex hidden">Leverage</h2>
                 <h2 className="flex md:hidden">Lev</h2>
               </div>
               <input className="w-full rounded-r-md" type="text" ref={inp} />{" "}

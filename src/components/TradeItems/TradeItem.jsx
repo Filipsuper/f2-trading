@@ -4,12 +4,13 @@ import Menu from "./Menu.jsx";
 import {
   CaretUpFill,
   CaretDownFill,
-  PlusCircleFill,
   PencilSquare,
+  Plus,
+  Dash,
 } from "react-bootstrap-icons";
 import Chart from "../Overview/Chart.jsx";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
-import { update_trade } from "../../tools/tools.js";
+import { close_trade, update_trade } from "../../tools/tools.js";
 import Modul from "../Modul.jsx";
 
 export default function TradeItem({ data, live_prices }) {
@@ -21,6 +22,7 @@ export default function TradeItem({ data, live_prices }) {
   const textAreaRef = useRef();
   const targetRef = useRef();
   const stopRef = useRef();
+  const fast_add_price = useRef();
 
   const { tradesData, refresh } = useContext(ApplicationContext);
 
@@ -35,6 +37,10 @@ export default function TradeItem({ data, live_prices }) {
   };
 
   useEffect(() => {
+    fast_add_price.current.value = Math.round(price);
+  }, []);
+
+  useEffect(() => {
     setPotentialTrade({
       loss: calculate_potential(price, size, stop, target).loss,
       win: calculate_potential(price, size, stop, target).win,
@@ -44,11 +50,11 @@ export default function TradeItem({ data, live_prices }) {
   const Stats_obj = (props) => {
     return (
       <div className="flex justify-center h-full w-full bg-inherit relative">
-        <div className="flex items-start flex-col w-full ">
-          <p className="p-1 text-start text-text text-xs w-fit h-fit border-b border-bg absolute">
+        <div className="flex items-start flex-col w-full overflow-hidden">
+          <p className="p-1 text-start text-text text-xs w-fit h-fit  border-bg absolute">
             {props.text}
           </p>
-          <p className="pb-2 mt-2 font-bold text-sm h-full w-full flex justify-center items-center text-center  text-text  ">
+          <p className="pb-2 mt-2 font-bold text-sm h-full w-full flex justify-center items-center text-center  text-text whitespace-nowrap">
             {props.children}
           </p>
         </div>
@@ -76,7 +82,7 @@ export default function TradeItem({ data, live_prices }) {
     return (
       <div className="w-full h-fit md:h-72 mt-2 p-2 border-inherit rounded-lg bg-sec">
         <div className="w-full h-full grid grid-rows-6 grid-cols-3 gap-6 md:grid-rows-3 md:grid-cols-3 md:gap-2 border-inherit ">
-          <div className="col-span-3 row-start-5 row-end-7 mb-2 md:mb-0 md:col-start-1 md:col-end-2 md:row-span-3 rounded-xl horizontal flex flex-col center-h h-full  border border-dashed border-gradient-2">
+          <div className="col-span-3 row-start-5 row-end-7 mb-2 md:mb-0 md:col-start-1 md:col-end-2 md:row-span-3 rounded-xl horizontal flex flex-col center-h h-full  border border-dashed border-gradient-4">
             <textarea
               className="w-full  h-full outline-none p-2 resize-none rounded-xl text-text bg-sec"
               placeholder="Write some notes..."
@@ -85,23 +91,23 @@ export default function TradeItem({ data, live_prices }) {
               {notes}
             </textarea>
           </div>
-          <div className="flex flex-col w-full justify-start col-span-3 row-span-2 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-4 border-r-2 border-gradient-2 p-2">
-            <div className="h-1/2 flex flex-row items-center justify-around bg-inherit border-b-2 border-gradient-2 pb-4 md:pb-0">
+          <div className="flex flex-col w-full justify-start col-span-3 row-span-2 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-4 border-r-2 border-gradient-4 p-2 overflow-hidden">
+            <div className="h-1/2 flex flex-row items-center justify-around bg-inherit border-b-2 border-gradient-4 pb-4 md:pb-0">
               <div className="pnl-cont">
                 <p className="text-xs text-text">Potential pnl</p>
-                <h1 className="text-4xl font-bold text-text">
+                <h1 className="text-3xl font-bold text-text">
                   {potential_trade.win + "kr"}
                 </h1>
               </div>
-              <h2 className="win-trade text-4xl p-2 font-bold text-text">
+              <h2 className="win-trade flex md:hidden lg:flex text-lg md:p-1 font-bold text-text">
                 {"+ " + Math.round((potential_trade.win / size) * 100) + "%"}
               </h2>
             </div>
-            <div className="flex flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
+            <div className="flex flex-row md:flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
               <div className="absolute top-0 right-0">
                 <div className="h-fit flex justify-end items-end">
                   <button
-                    className="bg-gray-300 text-xs rounded-md text-gray-500"
+                    className=" text-xs rounded-md text-gray-500 p-1"
                     onClick={() => {
                       save_data(textAreaRef.current.value);
                       refresh();
@@ -183,10 +189,30 @@ export default function TradeItem({ data, live_prices }) {
     setExtend(extend ? false : true);
   };
 
+  const item_fast_add = () => {
+    let parsed_data = {
+      trade_id: trade_id,
+      symbol: symbol,
+      price: parseFloat(fast_add_price.current.value),
+      isFast: true,
+    };
+    update_trade(parsed_data, refresh);
+  };
+  const item_fast_sell = () => {
+    let trade_data = {
+      symbol: symbol,
+      price: fast_add_price.current.value,
+      quantity: 1,
+      trade_id: trade_id,
+      isFast: true,
+    };
+    close_trade(trade_data, refresh);
+  };
+
   return (
     <div className="bg-sec border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
-        className="w-full grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-4 md:gap-2 text-center center-h h-20 md:h-14 py-4 hover:cursor-pointer"
+        className="w-full grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
         onClick={toggleExtend}
       >
         <h1 className="font-bold text-text">{symbol}</h1>
@@ -196,20 +222,53 @@ export default function TradeItem({ data, live_prices }) {
           <h1 className="font-bold text-sm win-trade">win</h1>
         </div>
         <h1 className="font-bold">{Math.round(size / price)}</h1>
-        <div className="horizontal center-v justify-end">
-          <button
-            className="modify-btn text-sm text-gray-600 mr-2"
-            onClick={(e) => {
-              e.stopPropagation();
-              setShowContextMenu(!showContextMenu);
-            }}
+        <div className="horizontal center-h center-v md:justify-end">
+          <div
+            className="horizontal center-h"
+            onClick={(e) => e.stopPropagation()}
           >
-            <h2>
-              <PencilSquare />
-            </h2>
-            <div className="">Modify</div>
-          </button>
-          <button className="text-xl text-a">
+            <div className="flex flex-col  w-full center-h border border-bg rounded-md bg-p text-sm text-gray-600 mr-2">
+              <div className="bg-p w-full px-1 rounded-t-md border-b border-bg">
+                <input
+                  ref={fast_add_price}
+                  className="bg-p w-8  border-none text-center"
+                  placeholder="price"
+                />
+              </div>
+              <div className="h-full flex flex-row rounded-b-md">
+                <button
+                  className="bg-p h-full text-xs hover:bg-bg p-1 rounded-bl-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    item_fast_add();
+                  }}
+                >
+                  <Plus />
+                </button>
+                <button
+                  className="bg-p h-full text-xs hover:bg-bg p-1 rounded-br-md"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    item_fast_sell();
+                  }}
+                >
+                  <Dash />
+                </button>
+              </div>
+            </div>
+            <button
+              className="modify-btn w-full text-sm text-gray-600 mr-2"
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowContextMenu(!showContextMenu);
+              }}
+            >
+              <h2>
+                <PencilSquare />
+              </h2>
+            </button>
+          </div>
+          <button className="text-xl text-a hidden md:flex">
             {extend ? <CaretUpFill /> : <CaretDownFill />}
           </button>
         </div>

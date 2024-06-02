@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const PROD_API = "https://trademaxxer.com/api";
-const DEV_API = "http://127.0.0.1:5000";
+const DEV_API = "http://trademaxxer.com/api";
 
 // REMEMBER TO CHANGE API WHEN PRODDING
 const API_URL = DEV_API;
@@ -13,27 +13,40 @@ axios.interceptors.request.use((config) => {
   return config;
 });
 
+const get_data = async (url) => {
+  let response = await axios.get(url);
+  let data = response.data;
+  return await data;
+};
+
+const post_data = async (url, post_data) => {
+  let response = await axios.post(url, post_data);
+  let data = response.data;
+  return await data;
+};
+
 export const get_user_data = async () => {
-  return axios.get("/user").then((res) => res.data);
+  return get_data("/user");
 };
 
 export const get_overview = async (setData, refresh) => {
   try {
-    axios.get("/overview").then((res) => setData(res.data));
-  } catch {
-    refresh();
+    let data = await get_data("/overview").then(() => refresh());
+    console.log(await data);
+    setData(data);
+  } catch (error) {
+    console.error("Fetch error:", error);
   }
 };
 
 export const remove_trade = async (trade_data, refresh) => {
-  axios
-    .post("/trades/delete", trade_data)
-    .then((res) => {
-      refresh();
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+  try {
+    let data = await post_data("/trades/delete", trade_data).then(() =>
+      refresh()
+    );
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
 };
 
 export const post_trade = async (trade_data, refresh) => {
@@ -41,6 +54,7 @@ export const post_trade = async (trade_data, refresh) => {
 
   const TARGET_STOP_PERCENTAGE = 0.1;
 
+  //Handle trade with and without target
   let trade_target = target
     ? target
     : parseFloat(price) + price * TARGET_STOP_PERCENTAGE;
@@ -53,29 +67,40 @@ export const post_trade = async (trade_data, refresh) => {
       symbol: symbol,
       price: parseFloat(price),
       size: price * Number.parseInt(size / price),
-      stop: trade_stop,
-      target: trade_target,
+      stop: parseFloat(trade_stop),
+      target: parseFloat(trade_target),
       type: "buy",
       closed: false,
     };
   }
-  axios
-    .post("/trades/add", trade)
-    .then((res) => {
-      refresh();
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
-    });
+  try {
+    return post_data("/trades/add", trade)
+      .then(() => refresh())
+      .then(() => "Bought " + qty + " stocks!");
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
 };
 
 export const update_trade = async (trade_data, refresh) => {
-  const { symbol, price, qty, isNew, stop, target, trade_id, notes } =
+  const { symbol, price, qty, isNew, stop, target, trade_id, notes, isFast } =
     trade_data;
 
+  //VALIDATE
+  if (qty < 1 || price < 0) return "Can not buy less than 1";
+
   const TARGET_STOP_PERCENTAGE = 0.1;
+  //INSTANTIATE TRADE
   let trade = {};
-  if (notes != undefined) {
+  if (isFast) {
+    // IF ITEM FAST ADD THEN STOP AND TARGET WONT BE SENT, ONLY PRICE DATA
+    trade = {
+      symbol: symbol,
+      trade_id: trade_id,
+      price: price,
+      size: price,
+    };
+  } else if (notes != undefined) {
     trade = {
       symbol: symbol,
       trade_id: trade_id,
@@ -94,39 +119,29 @@ export const update_trade = async (trade_data, refresh) => {
       target: target,
     };
   }
-  axios
-    .post("/trades/update", trade)
-    .then((res) => {
-      if (!res.ok) {
-        throw new Error(`HTTP error! status: ${res.status}`);
-      }
-      return res; // Fixed to correctly call the method
-    })
-    .then((json) => {
-      refresh();
-    })
-    .catch((error) => {
-      console.error("Fetch error:", error);
+  try {
+    return post_data("/trades/update", trade)
+      .then(() => refresh())
+      .then(() => "Bought " + qty + " stocks!");
+  } catch (error) {
+    console.error("Fetch error:", error);
+  }
+};
+
+export const close_trade = async (trade, refresh, qty) => {
+  // Handle validation
+  if (trade.quantity < 1 || trade.price < 1) return "Can not sell less than 1";
+  if (trade.quantity > qty) return "Quantity too large!";
+
+  return post_data("/trades/close", trade)
+    .then(() => refresh())
+    .then(() => {
+      return "Sold " + trade.quantity + " stocks!";
     });
 };
 
-export const close_trade = async (trade, refresh) => {
-  axios
-    .post("/trades/close", trade)
-    .then((res) => res.data)
-    .then(() => refresh());
-};
-
-export const get_trades = async (setData) => {
-  axios.get("/trades").then((res) => setData(res.data));
-};
-
-export const get_prices = async (setData) => {
-  axios.get("/stock_prices").then((res) => setData(res.data));
-};
-
-export const get_graph_data = async (setData) => {
-  axios.get("/graph_data").then((res) => setData(res.data));
+export const get_set_data = async (url, setData) => {
+  get_data(url).then((res) => setData(res));
 };
 
 export const post_login = async (data, refresh) => {
@@ -145,3 +160,5 @@ export const post_login = async (data, refresh) => {
 export const create_account = async (data, refresh) => {
   return axios.post("/user/add", data).then((res) => res.data);
 };
+
+// const parse_graph_data = (trades: Array) => {};

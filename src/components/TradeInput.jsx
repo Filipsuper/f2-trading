@@ -6,6 +6,7 @@ import { useGlobal } from "../App";
 import { Plus, Sliders } from "react-bootstrap-icons";
 import { ApplicationContext } from "../providers/ApplicationProvider";
 import Modul from "./Modul";
+import Menu from "./TradeItems/Menu";
 
 export default function () {
   const tickerRef = useRef();
@@ -38,7 +39,7 @@ export default function () {
   const AdvancedPosition = () => {
     return (
       <div>
-        <h1>Advanced Pos</h1>
+        <Menu />
       </div>
     );
   };
@@ -66,25 +67,25 @@ export default function () {
             ref={sizeRef}
           />
         </div>
-        <div className="flex flex-row gap-2 h-full">
+        <div className=" flex flex-row gap-2 h-full">
           <button
-            className="modify-btn rounded-l-none   p-1 text-p bg-a text-xl"
+            className="btn-cont rounded-md p-1 text-p bg-a text-xl"
             onClick={() => add_trade()}
           >
-            <h2 className="text-xs hidden md:flex">Fast add</h2>
             <Plus />
+            <h2 className="text-xs hidden md:flex">Fast add</h2>
           </button>
-          {/* <button
-            className="flex flex-row items-center rounded-md border border-bg bg-p"
+          <button
+            className="btn-cont items-center rounded-md border border-bg bg-p"
             onClick={() => {
               setShowAdvanced(!showAdvanced);
             }}
           >
-            <h2 className="p-1 my-1 text-text border-r border-inherit">
+            <div className="p-1 px-2">
               <Sliders />
-            </h2>
-            <div className="p-1 my-1 hidden md:flex">Advanced</div>
-          </button> */}
+            </div>
+            <h2 className="hidden md:flex">Advanced</h2>
+          </button>
         </div>
       </div>
       {showAdvanced ? (
