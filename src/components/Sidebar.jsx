@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import {
   HouseFill,
   BarChartLine,
@@ -9,14 +9,17 @@ import {
 import Header from "./Header";
 import { useNavigate } from "react-router-dom";
 
-export default function Sidebar() {
+export default function Sidebar({ active }) {
   const navigate = useNavigate();
 
   return (
     <nav className="w-full h-full">
       <ul className="navbar">
         <li>
-          <a onClick={() => navigate("/dashboard")}>
+          <a
+            className={active == "dashboard" ? "text-a" : null}
+            onClick={() => navigate("/dashboard")}
+          >
             <p>
               <BarChartLine />
             </p>
@@ -24,15 +27,21 @@ export default function Sidebar() {
           </a>
         </li>
         <li>
-          <a onClick={() => navigate("/home")}>
+          <a
+            className={active == "home" ? "text-a" : null}
+            onClick={() => navigate("/home")}
+          >
             <p>
               <HouseFill />
             </p>
-            <span className="hidden xl:flex">Home</span>
+            <span className="hidden xl:flex ">Home</span>
           </a>
         </li>
         <li>
-          <a onClick={() => navigate("/calculator")}>
+          <a
+            className={active == "calculator" ? "text-a" : null}
+            onClick={() => navigate("/calculator")}
+          >
             <p>
               <CalculatorFill />
             </p>

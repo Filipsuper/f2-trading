@@ -82,7 +82,7 @@ function App() {
         <div className="w-full md:flex flex-col justify-between h-full mb-4 md:mb-0 md:col-span-1">
           <div className="hidden md:flex"></div>
           <div className="">
-            <Sidebar />
+            <Sidebar active={"home"} />
           </div>
           <div className="hidden md:flex">
             <Header />
