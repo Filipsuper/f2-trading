@@ -88,10 +88,10 @@ export default function Dashboard() {
     <main className="flex flex-col md:h-screen bg-bg height-screen p-2 text-text">
       <div className="h-full flex flex-col md:grid md:grid-cols-10 md:grid-rows-3 gap-2">
         <div className="w-full h-full md:flex flex-col justify-between mb-4 md:mb-0 md:row-span-3 md:col-span-1">
-          <Navbar />
+          <Navbar active={"dashboard"} />
         </div>
-        <div className="h-full flex flex-col col-span-2 row-span-1 dashboard-cont bg-sec">
-          <Chart data={user} />
+        <div className="h-full flex flex-col col-span-4 row-span-1 dashboard-cont bg-sec">
+          <Chart data={graphData} />
         </div>
         <div className="h-full gap-2 flex flex-col col-span-2 row-span-1 ">
           <div className="dashboard-cont mb-0 bg-sec">

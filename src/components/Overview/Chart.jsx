@@ -1,85 +1,81 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import { Tooltip } from "chart.js";
+import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  ResponsiveContainer,
+  AreaChart,
+  Area,
+} from "recharts";
+import { ApplicationContext } from "../../providers/ApplicationProvider";
 
-export default function Chart({ data }) {
+export default function Chart({ data, type }) {
   const canvasRef = useRef();
   const [pnl, setPnl] = useState([]);
-
-  useEffect(() => {}, []);
-
-  const plot_chart = (ctx: CanvasRenderingContext2D, x, y) => {
-    const margin = 0;
-    const paddingY = 0.05;
-    const width = ctx.canvas.width;
-    const height = ctx.canvas.height;
-    const color = "#64ff61";
-
-    ctx.clearRect(0, 0, width, height);
-
-    //STYLING:
-    ctx.lineWidth = 5;
-    ctx.strokeStyle = "#3fab8a"; // Line color
-    ctx.lineCap = "round"; // Line cap style
-    ctx.lineJoin = "round"; // Line join style
-    ctx.setLineDash([]); // Solid line
-    ctx.shadowColor = "rgba(0, 0, 0, 0.2)"; // Shadow color
-    ctx.shadowBlur = 5; // Shadow blur
-    ctx.shadowOffsetX = 1; // Shadow X offset
-    ctx.shadowOffsetY = 1; // Shadow Y offset
-    ctx.fillStyle = "rgba(63, 171, 138, 0.1)";
-
-    if (x != undefined) {
-      let maxX = Math.max(...x);
-      let maxY = Math.max(...y);
-      let minX = Math.min(...x);
-      let minY = Math.min(...y);
-
-      let rangeY = maxY - minY;
-      let rangeX = maxX - maxX;
-      let scaleY = height / rangeY;
-      let scaleX = width / (x.length - 1);
-      ctx.beginPath();
-
-      for (let i = 0; i < x.length; i++) {
-        let posX = margin + i * scaleX + 1;
-        let posY = height - (margin + (y[i] - minY) * scaleY);
-        if (i === 0) ctx.moveTo(posX, posY);
-        ctx.lineTo(posX, posY);
-      }
-      ctx.lineTo(width + 100, height);
-      ctx.fill();
-      //MAKE SCALABLE
-      ctx.stroke();
-    }
-  };
+  const [chartData, setChartData] = useState([]);
+  const { tradesData } = useContext(ApplicationContext);
 
   useEffect(() => {
-    console.log(data["pnl"]);
+    console.log(data);
     let pnl_mutable = 0;
     let pnl_arr = [];
-    if (data["pnl"] === undefined) return;
-    data["pnl"].map((elem) => {
-      pnl_mutable += elem;
-      // pnl_arr.push(pnl_mutable);
-    });
+    let index_arr = [];
 
-    setPnl(pnl);
-    // plot_chart(canvasRef.current.getContext("2d"), data["pnl"], data["pnl"]);
+    if (data == undefined) return;
+
+    data.map((elem, idx) => {
+      pnl_mutable += elem;
+      pnl_arr.push({ name: idx, price: pnl_mutable });
+      index_arr.push(idx);
+    });
+    // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, ...];
+
+    setPnl(Math.round(pnl_mutable));
+
+    setChartData(pnl_arr);
 
     // if (data["pnl"] != undefined) setPnl(data["y"][data["y"].length - 1]);
   }, [data]);
 
   return (
-    <div className="w-full h-full vertical center-h p-4">
-      <div className="w-full flex flex-row justify-between">
+    <div className="w-full h-60 md:h-full vertical center-h p-4">
+      <div className="w-full flex flex-row justify-between mb-2">
         <h1 className="text-text ">Equity</h1>
-        <h2 className="text-a font-bold">{pnl} kr</h2>
+        <div className="flex flex-row gap-2">
+          <h2 className="text-text font-bold ">{pnl} kr</h2>
+          <h2
+            className={
+              "horizontal center-h text-xs " +
+              (pnl > 0 ? "win-trade" : "loss-trade")
+            }
+          >
+            {(pnl > 0 ? "+ " : null) + Math.round((pnl / 10000) * 100)}%
+          </h2>
+        </div>
       </div>
-      <canvas
-        width={800}
-        height={500}
-        className="px-2 mt-2 w-full pt-2"
-        ref={canvasRef}
-      ></canvas>
+      <div className="w-full h-full">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart
+            data={chartData}
+            margin={{ top: 5, right: 20, bottom: -10, left: -10 }}
+          >
+            <CartesianGrid stroke="#d1d4e2" strokeDasharray="5 5" />
+            <Tooltip />
+            <Line
+              type="monotone"
+              dataKey="price"
+              stroke="#3fab8a"
+              strokeWidth="2px"
+              dot={false}
+            />
+            <XAxis dataKey="name" stroke="#d1d4e2" />
+            <YAxis stroke="#d1d4e2" />
+          </LineChart>
+        </ResponsiveContainer>
+      </div>
     </div>
   );
 }
