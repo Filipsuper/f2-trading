@@ -14,7 +14,18 @@ import { close_trade, update_trade } from "../../tools/tools.js";
 import Modul from "../Modul.jsx";
 
 export default function TradeItem({ data, live_prices }) {
-  const { symbol, size, price, stop, target, trade_id, notes } = data;
+  const {
+    symbol,
+    size,
+    price,
+    stop,
+    target,
+    trade_id,
+    notes,
+    pnl,
+    setup,
+    initial_size,
+  } = data;
   const [extend, setExtend] = useState(false);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const [potential_trade, setPotentialTrade] = useState({ loss: 0, win: 1 });
@@ -23,6 +34,8 @@ export default function TradeItem({ data, live_prices }) {
   const targetRef = useRef();
   const stopRef = useRef();
   const fast_add_price = useRef();
+
+  let pnl_text = pnl ? pnl : 0;
 
   const { tradesData, refresh } = useContext(ApplicationContext);
 
@@ -37,7 +50,7 @@ export default function TradeItem({ data, live_prices }) {
   };
 
   useEffect(() => {
-    fast_add_price.current.value = Math.round(price);
+    // fast_add_price.current.value = Math.round(price);
   }, []);
 
   useEffect(() => {
@@ -94,13 +107,13 @@ export default function TradeItem({ data, live_prices }) {
           <div className="flex flex-col w-full justify-start col-span-3 row-span-2 md:col-start-2 md:col-end-3 md:row-start-1 md:row-end-4 border-r-2 border-gradient-4 p-2 overflow-hidden">
             <div className="h-1/2 flex flex-row items-center justify-around bg-inherit border-b-2 border-gradient-4 pb-4 md:pb-0">
               <div className="pnl-cont">
-                <p className="text-xs text-text">Potential pnl</p>
+                <p className="text-xs text-text">Realised profit</p>
                 <h1 className="text-3xl font-bold text-text">
-                  {potential_trade.win + "kr"}
+                  {Math.round(pnl_text) + "kr"}
                 </h1>
               </div>
               <h2 className="win-trade flex md:hidden lg:flex text-lg md:p-1 font-bold text-text">
-                {"+ " + Math.round((potential_trade.win / size) * 100) + "%"}
+                {"+ " + Math.round((pnl_text / initial_size) * 100) + "%"}
               </h2>
             </div>
             <div className="flex flex-row md:flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
@@ -212,22 +225,28 @@ export default function TradeItem({ data, live_prices }) {
   return (
     <div className="bg-sec border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
-        className="w-full grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-6 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
+        className="w-full grid grid-cols-4 grid-rows-2 md:grid-rows-1 md:grid-cols-7 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
         onClick={toggleExtend}
       >
         <h1 className="font-bold text-text">{symbol}</h1>
         <h1>{Math.round(price)}</h1>
         <h1>{target}</h1>
         <div className="vertical center-h">
-          <h1 className="font-bold text-sm win-trade">win</h1>
+          <h1 className="font-bold text-sm active-trade">Active</h1>
         </div>
         <h1 className="font-bold">{Math.round(size / price)}</h1>
+        <div className="vertical center-h">
+          <h1 className="font-bold bg-gray-300 w-fit p-1 rounded-md">
+            {setup}
+          </h1>
+        </div>
+
         <div className="horizontal center-h center-v md:justify-end">
           <div
             className="horizontal center-h"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex flex-col  w-full center-h border border-bg rounded-md bg-p text-sm text-gray-600 mr-2">
+            {/* <div className="flex flex-col  w-full center-h border border-bg rounded-md bg-p text-sm text-gray-600 mr-2">
               <div className="bg-p w-full px-1 rounded-t-md border-b border-bg">
                 <input
                   ref={fast_add_price}
@@ -255,7 +274,7 @@ export default function TradeItem({ data, live_prices }) {
                   <Dash />
                 </button>
               </div>
-            </div>
+            </div> */}
             <button
               className="modify-btn w-full text-sm text-gray-600 mr-2"
               onClick={(e) => {

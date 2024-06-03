@@ -1,10 +1,10 @@
 import axios from "axios";
 
 const PROD_API = "https://trademaxxer.com/api";
-const DEV_API = "http://trademaxxer.com/api";
+const DEV_API = "http://127.0.0.1:9091/api";
 
 // REMEMBER TO CHANGE API WHEN PRODDING
-const API_URL = PROD_API;
+const API_URL = DEV_API;
 
 axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use((config) => {
@@ -50,7 +50,7 @@ export const remove_trade = async (trade_data, refresh) => {
 };
 
 export const post_trade = async (trade_data, refresh) => {
-  const { symbol, price, qty, isNew, size, target, stop } = trade_data;
+  const { symbol, price, qty, isNew, size, target, stop, setup } = trade_data;
 
   const TARGET_STOP_PERCENTAGE = 0.1;
 
@@ -65,6 +65,7 @@ export const post_trade = async (trade_data, refresh) => {
   if (isNew) {
     trade = {
       symbol: symbol,
+      setup: setup,
       price: parseFloat(price),
       size: price * Number.parseInt(size / price),
       stop: parseFloat(trade_stop),

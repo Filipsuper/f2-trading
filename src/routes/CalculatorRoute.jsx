@@ -10,7 +10,7 @@ export default function CalculatorRoute() {
         <div className="w-full h-full md:flex flex-col justify-between mb-4 md:mb-0 md:col-span-1">
           <div></div>
           <div>
-            <Sidebar />
+            <Sidebar active={"calculator"} />
           </div>
           <div className="hidden md:flex">
             <Header />

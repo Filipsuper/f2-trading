@@ -5,7 +5,7 @@ import { CaretUpFill, CaretDownFill, XOctagon } from "react-bootstrap-icons";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 
 export default function TradeItemClosed({ data }) {
-  const { symbol, size, price, stop, target, exit, pnl, notes } = data;
+  const { symbol, size, price, stop, target, exit, pnl, notes, setup } = data;
   const [extend, setExtend] = useState(false);
   const [showContextMenu, setShowContextMenu] = useState(false);
   const { refresh } = useContext(ApplicationContext);
@@ -100,7 +100,7 @@ export default function TradeItemClosed({ data }) {
   return (
     <div className="w-full flex flex-col justify-center items-center border-b border-gradient-4 text-text mb-2 p-2 relative rounded-sm ">
       <div
-        className="w-full grid grid-rows-1 grid-cols-6 gap-2 text-center center-h h-5 text-gray-500 py-2 hover:cursor-pointer"
+        className="w-full grid grid-rows-1 grid-cols-7 gap-2 text-center center-h h-5 text-gray-500 py-2 hover:cursor-pointer"
         onClick={toggleExtend}
       >
         <h1 className="font-bold text-text uppercase">{symbol}</h1>
@@ -114,6 +114,11 @@ export default function TradeItemClosed({ data }) {
         <div className="horizontal center-h center-v">
           <h1 className="text-text py-1 px-2 rounded-xl text-base font-bold w-fit">
             closed
+          </h1>
+        </div>
+        <div className="horizontal center-h center-v">
+          <h1 className="text-text py-1 px-2 rounded-xl text-base font-bold w-fit">
+            {setup}
           </h1>
         </div>
         <div className="vertical center-h items-end">

@@ -4,11 +4,11 @@
 
 @layer base {
     :root {
-      --text:  rgb(68, 78, 99);
-      --bg: rgb(209, 212, 226);
+      --text:  #444e63;
+      --bg: #d1d4e2;
       --p: rgb(222, 224, 234);
       --s: #e6e8ee;
-      --a: rgb(63, 171, 138);
+      --a: #3fab8a;
     }
 
 }
@@ -169,28 +169,31 @@ button:active{
 .gradient-cont{
   @apply bg-gradient-to-tr from-bg via-bg to-p text-white text-opacity-80 px-2 rounded-md font-bold text-sm
 }
+.active-trade{
+  @apply bg-gradient-to-tr from-amber-400 via-amber-400 to-p text-white text-opacity-80 px-2 rounded-md font-bold border border-p border-gradient-3 h-fit
+}
 .win-trade{
-  @apply bg-gradient-to-tr from-a via-a to-p text-white text-opacity-80 px-2 rounded-md font-bold 
+  @apply bg-gradient-to-tr from-a via-a to-p text-white text-opacity-80 px-2 rounded-md font-bold h-fit
 }
 .loss-trade{
-  @apply bg-gradient-to-tr from-red-400 via-red-400 to-white px-2 rounded-md font-bold  text-white
+  @apply bg-gradient-to-tr from-red-400 via-red-400 to-white px-2 rounded-md font-bold  text-white h-fit
 }
 .pnl-cont{
 
 }
 .navbar{
-  @apply mb-2 h-full w-full text-text flex flex-row md:flex-col justify-start
+  @apply mb-2 h-full w-full text-text flex flex-row  md:flex-col justify-center
 }
 .navbar li{
-  @apply  w-full h-full ml-0 shadow-none rounded-none md:border-b border-sec text-gray-500 hover:text-a   first:rounded-t-xl last:rounded-b-xl last:border-0 hover:cursor-pointer transition-colors;
+  @apply  w-full h-full vertical center-h ml-0 shadow-none p-0 rounded-none md:border-b border-sec text-gray-500 hover:text-a   first:rounded-t-xl last:rounded-b-xl last:border-0 hover:cursor-pointer transition-colors;
   border-image: radial-gradient(circle, rgb(107,114,128,0.5) 0%, rgba(2,0,36,0) 70%) 5;
 }
 .navbar li a{
-  @apply w-full h-full flex justify-center xl:justify-start items-center text-center
+  @apply w-24 h-14 flex justify-center xl:justify-start items-center text-start
 }
 
 .navbar li a span{
-  @apply ml-2 text-center
+  @apply ml-2 text-start
 }
 
 .trade-item-cont{
@@ -203,13 +206,13 @@ button:active{
   @apply flex justify-center items-center bg-p shadow-sm rounded-r-xl border border-sec
 }
 .menu-modal-stats{
-  @apply vertical center-v center-h
+  @apply vertical center-v center-h w-full
 }
 .menu-modal-stats h2{
-  @apply font-bold text-sm
+  @apply font-bold text-xl text-start
 }
 .menu-modal-stats h1{
-  @apply text-xs
+  @apply text-sm text-start
 }
 .s-t-cont{
   @apply flex flex-col w-full justify-center items-center xl:items-center px-5 rounded-sm bg-inherit
@@ -260,7 +263,7 @@ button:active{
   @apply flex flex-row items-center 
 }
 .btn-cont h2{
-  @apply text-xs border-l p-1
+  @apply text-xs  border-bg p-1
 }
 .menu-inp-cont{
   @apply horizontal center-h bg-bg rounded-md;

@@ -6,7 +6,7 @@ import {
   update_trade,
 } from "../../tools/tools";
 import { ApplicationContext } from "../../providers/ApplicationProvider";
-import { Plus, minus } from "react-bootstrap-icons";
+import { CaretDownFill, Plus, minus } from "react-bootstrap-icons";
 
 export default function Menu({ data }) {
   const priceRef = useRef();
@@ -17,10 +17,13 @@ export default function Menu({ data }) {
 
   const { refresh } = useContext(ApplicationContext);
   const { symbol, trade_id, size, price } = data ? data : {};
-  const [symbolState, setSymbolState] = useState("");
+  const [tradeState, setTradeState] = useState([
+    { symbolState: "", setupState: "" },
+  ]);
   const [amount, setAmount] = useState(0);
   const [message, setMessage] = useState("");
   const old_qty = Math.round(size / price);
+  const [dropDown, setDropDown] = useState(false);
 
   const TARGET_STOP_PERCENTAGE = 0.1;
 
@@ -30,9 +33,10 @@ export default function Menu({ data }) {
 
   const buy_trade = async () => {
     let trade_data = {
-      symbol: symbolState,
+      symbol: tradeState.symbolState,
       price: priceRef.current.value,
       qty: qty.current.value,
+      setup: tradeState.setupState,
       size: size_ref.current.value,
       isNew: true,
       isFast: false,
@@ -112,13 +116,17 @@ export default function Menu({ data }) {
   }, []);
 
   const handle_symbol_change = (e) => {
-    setSymbolState(e.target.value);
+    setTradeState({ ...tradeState, symbolState: e.target.value });
   };
+  const handle_setup_change = (e) => {
+    setTradeState({ ...tradeState, setupState: e.target.value });
+  };
+
   const SmallDashboard = () => {
     return (
       <>
-        <div className="grid grid-cols-2 grid-rows-1 gap-2 w-full  rounded-md mb-2 p-2">
-          <div className="w-full col-span-2 menu-modal-stats">
+        <div className="grid grid-cols-3 grid-rows-1 gap-2 w-full rounded-md mb-2 p-2">
+          <div className="menu-modal-stats ">
             <h1>Size:</h1>
             <h2>{Math.round(size)} kr</h2>
           </div>
@@ -135,14 +143,30 @@ export default function Menu({ data }) {
     );
   };
 
+  const setups = ["test", "test1"];
+
+  const Setup = () => {
+    return (
+      <div className="absolute w-full bg-bg shadow-sm  rounded-b">
+        <ul>
+          {setups.map((elem) => (
+            <li className="shadow-none">
+              <button>{elem}</button>
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <div className="flex flex-col  justify-center items-center p-2 ">
       {data !== undefined ? (
         <SmallDashboard />
       ) : (
         <>
-          <div className="w-full mb-4">
-            <div className="menu-inp-cont">
+          <div className="flex flex-row w-full mb-4 gap-2">
+            <div className="menu-inp-cont w-full">
               <h1>Symbol</h1>
               <input
                 id="symbol"
@@ -151,15 +175,42 @@ export default function Menu({ data }) {
                 onChange={handle_symbol_change}
                 className="w-full p-2 text-md text-center bg-bg border-bg rounded-md placeholder:text-gray-400"
                 placeholder="ex. AAPL"
-                value={symbolState}
+                value={tradeState.symbolState}
               />
             </div>
+            <div className="menu-inp-cont w-full">
+              <h1>Setup</h1>
+              <input
+                id="symbol"
+                name="symbol"
+                type="text"
+                onChange={handle_setup_change}
+                className="w-full p-2 text-md text-center bg-bg border-bg rounded-md placeholder:text-gray-400"
+                placeholder="ex. Episodic Pivot"
+                value={tradeState.setupState}
+              />
+            </div>
+            {/* <div className="w-1/3 h-42 relative">
+              <button
+                id="symbol"
+                name="symbol"
+                type="text"
+                className="flex flex-row justify-around items-center w-full h-full p-2 text-md text-center bg-bg border-bg rounded-md placeholder:text-gray-400"
+                onClick={() => setDropDown(!dropDown)}
+              >
+                Setup
+                <span>
+                  <CaretDownFill />
+                </span>
+              </button>
+              {dropDown ? <Setup /> : null}
+            </div> */}
           </div>
         </>
       )}
       <div className="w-full mb-4">
         <div className=" menu-inp-cont">
-          <h1>Entry</h1>
+          <h1>Price</h1>
           <input
             min="0"
             onChange={on_price_change}

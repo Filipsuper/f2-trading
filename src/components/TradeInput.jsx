@@ -8,12 +8,12 @@ import { ApplicationContext } from "../providers/ApplicationProvider";
 import Modul from "./Modul";
 import Menu from "./TradeItems/Menu";
 
-export default function () {
+export default function TradeInput({ props }) {
   const tickerRef = useRef();
   const priceRef = useRef();
   const sizeRef = useRef();
   const { refresh } = useContext(ApplicationContext);
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const { showAdvanced, setShowAdvanced } = props;
 
   const add_trade = () => {
     let tickerVal = tickerRef.current.value;
@@ -34,14 +34,6 @@ export default function () {
       closed: false,
     };
     post_trade(trade_data, refresh);
-  };
-
-  const AdvancedPosition = () => {
-    return (
-      <div>
-        <Menu />
-      </div>
-    );
   };
 
   return (
@@ -66,37 +58,30 @@ export default function () {
             placeholder="Size"
             ref={sizeRef}
           />
-        </div>
-        <div className=" flex flex-row gap-2 h-full">
           <button
-            className="btn-cont rounded-md p-1 text-p bg-a text-xl"
+            className="btn-cont rounded-r-md p-1 text-text border bg-bg border-sec "
             onClick={() => add_trade()}
           >
-            <Plus />
-            <h2 className="text-xs hidden md:flex">Fast add</h2>
+            <div className="p-1 px-2">
+              <Plus />
+            </div>
           </button>
+        </div>
+
+        <div className=" flex flex-row gap-2 h-full">
           <button
-            className="btn-cont items-center rounded-md border border-bg bg-p"
+            className="btn-cont items-center rounded-md text-text border border-bg bg-p"
             onClick={() => {
               setShowAdvanced(!showAdvanced);
             }}
           >
             <div className="p-1 px-2">
-              <Sliders />
+              <Plus />
             </div>
-            <h2 className="hidden md:flex">Advanced</h2>
+            <h2 className="hidden md:flex">Add Trade</h2>
           </button>
         </div>
       </div>
-      {showAdvanced ? (
-        <Modul
-          header={"Advanced Position "}
-          show={showAdvanced}
-          setShow={setShowAdvanced}
-        >
-          <AdvancedPosition />
-        </Modul>
-      ) : null}
     </div>
   );
 }
