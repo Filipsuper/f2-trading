@@ -39,34 +39,15 @@ export default function TradeInput({ props }) {
   return (
     <div className="w-full text-xs bg-inherit h-8 ">
       <div className="w-full flex flex-row justify-between h-full">
-        <div className="flex flex-row h-full">
+        {/* <div className="flex flex-row h-full">
           <input
             type="text"
-            className="w-full rounded-l-md rounded-r-none text-sm  dark-input"
-            placeholder="Ticker"
+            className="w-full rounded-md text-sm dark-input"
+            placeholder="Search"
             ref={tickerRef}
           />
-          <input
-            type="text"
-            className="w-full rounded-r-none text-sm  dark-input"
-            placeholder="Price"
-            ref={priceRef}
-          />
-          <input
-            type="text"
-            className="w-full rounded-r-none text-sm  dark-input"
-            placeholder="Size"
-            ref={sizeRef}
-          />
-          <button
-            className="btn-cont rounded-r-md p-1 text-text border bg-bg border-sec "
-            onClick={() => add_trade()}
-          >
-            <div className="p-1 px-2">
-              <Plus />
-            </div>
-          </button>
-        </div>
+        </div> */}
+        <div></div>
 
         <div className=" flex flex-row gap-2 h-full">
           <button

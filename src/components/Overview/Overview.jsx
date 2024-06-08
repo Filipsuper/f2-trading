@@ -18,7 +18,7 @@ export default function Overview() {
           <p className="absolute p-1 text-start text-xs w-fit h-fit text-text border-b  border-bg">
             {text}
           </p>
-          <p className="h-full flex justify-center items-center pb-2 font-bold text-a text-base w-full text-center p-2">
+          <p className="h-full flex justify-center items-center pb-2 font-bold text-text text-xl w-full text-center p-2">
             {data_inp}
           </p>
         </div>
@@ -54,14 +54,14 @@ export default function Overview() {
   const COLORS = ["#0088FE", "#00C49F"];
 
   return (
-    <div className="h-full rounded w-full flex flex-col justify-center items-between">
+    <div className=" rounded w-full flex flex-col justify-center items-between">
       {/* <h1 className="pb-2 mb-2 text-text">Account Performance</h1> */}
       <div className="flex flex-col flex-grow items-center justify-center">
-        <div className="bg-sec rounded-md w-full h-full md:h-52">
+        <div className="bg-p rounded-md w-full h-full md:h-52">
           <Chart data={graphData} />
         </div>
-        <div className="h-96 flex-grow grid grid-rows-3 grid-cols-2 w-full mt-2 border-bg bg-sec rounded-md ">
-          <div className="border-b border-inherit col-span-1">
+        <div className="h-48 md:h-0 flex-grow flex flex-row w-full mt-2 border-bg bg-p rounded-md ">
+          <div className="border-b border-inherit w-1/2">
             <div className="w-full h-full horizontal center-h">
               <PieChartComp data={pieChartData[0]}>
                 <h1 className="text-xs">Win % </h1>
@@ -77,7 +77,7 @@ export default function Overview() {
               </PieChartComp>
             </div>
           </div>
-          <div className="border-b border-inherit col-span-1">
+          <div className="border-b border-inherit w-1/2">
             <div className="w-full h-full horizontal center-h">
               <PieChartComp data={pieChartData[1]}>
                 <h1 className="text-xs">Win/Loss Ratio</h1>
@@ -91,7 +91,8 @@ export default function Overview() {
               </PieChartComp>
             </div>
           </div>
-
+        </div>
+        <div className="h-48 flex-grow grid grid-rows-2 grid-cols-2 w-full mt-2 border-bg bg-p rounded-md ">
           <div>
             <Stats_obj
               text={"Wins: "}

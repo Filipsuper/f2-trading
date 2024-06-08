@@ -6,10 +6,17 @@
     :root {
       --text:  #444e63;
       --bg: #d1d4e2;
+      --p: rgb(239, 240, 245);
+      --s: #ffffff;
+      --a: #3fab8a;
+    }
+    /* :root {
+      --text:  #444e63;
+      --bg: #d1d4e2;
       --p: rgb(222, 224, 234);
       --s: #e6e8ee;
       --a: #3fab8a;
-    }
+    } */
 
 }
 
@@ -41,6 +48,9 @@
 
 .window-header{
   @apply w-full text-start text-sm px-2 h-8 flex items-center border-b border-b-neutral-200 bg-neutral-100 text-text 
+}
+.background{
+  @apply bg-gradient-to-br from-white via-bg to-bg
 }
 
 .App {
@@ -257,7 +267,10 @@ button:active{
   box-sizing: border-box;
 }
 .dashboard-cont{
-  @apply h-full rounded-md border border-gradient-2 md:mb-0 shadow-md
+  @apply h-full rounded-md border-sec border border-gradient-2 md:mb-0 shadow-md
+}
+.container-style{
+  @apply rounded-md border-sec border border-gradient-2 md:mb-0 shadow-md
 }
 .btn-cont{
   @apply flex flex-row items-center 

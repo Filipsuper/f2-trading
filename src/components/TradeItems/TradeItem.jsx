@@ -236,9 +236,7 @@ export default function TradeItem({ data, live_prices }) {
         </div>
         <h1 className="font-bold">{Math.round(size / price)}</h1>
         <div className="vertical center-h">
-          <h1 className="font-bold bg-gray-300 w-fit p-1 rounded-md">
-            {setup}
-          </h1>
+          <h1 className="font-bold bg-p w-fit p-1 rounded-md">{setup}</h1>
         </div>
 
         <div className="horizontal center-h center-v md:justify-end">

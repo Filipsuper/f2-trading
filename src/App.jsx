@@ -32,7 +32,7 @@ export const options = {
 };
 
 function App() {
-  const { tradesData, refresh } = useContext(ApplicationContext);
+  const { tradesData, refresh, setDate, date } = useContext(ApplicationContext);
   const [stockPrices, setStockPrices] = useState([]);
   const navigate = useNavigate();
 
@@ -77,9 +77,9 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col md:h-screen bg-bg height-screen p-2 ">
-      <div className="h-full flex flex-col md:grid md:grid-cols-10 md:grid-rows-1 md:gap-2">
-        <div className="w-full md:flex flex-col justify-between h-full mb-4 md:mb-0 md:col-span-1">
+    <div className="flex flex-col  md:h-screen bg-bg gap-2 p-2">
+      <div className="flex flex-col md:flex-row h-full">
+        <div className="md:w-44 md:flex flex-col justify-between h-full mb-4 ">
           <div className="hidden md:flex"></div>
           <div className="">
             <Sidebar active={"home"} />
@@ -88,11 +88,50 @@ function App() {
             <Header />
           </div>
         </div>
-        <div className="h-full flex items-center mb-4 md:mb-0 flex-grow md:col-start-2 md:col-end-11 lg:col-end-9 bg-p rounded-md shadowglow">
-          <TradeTable data={tradesData} inp={true} />
-        </div>
-        <div className="flex-grow mb-4 md:hidden lg:flex lg:mb-0 lg:col-start-9 lg:col-end-11">
-          <Overview />
+        <div className="flex h-screen  flex-col w-full">
+          <header className="horizontal justify-start w-full px-2 py-2 center-h center-v bg-p rounded-md mb-2 gap-2 ">
+            <h1 className="mr-2">Sort trades</h1>
+            <button
+              className="btn-cont border-r"
+              onClick={() => {
+                setDate("1");
+              }}
+            >
+              <h2>Today</h2>
+            </button>
+            <button
+              className="btn-cont"
+              onClick={() => {
+                setDate("5");
+              }}
+            >
+              <h2>1 week</h2>
+            </button>
+            <button
+              className="btn-cont"
+              onClick={() => {
+                setDate("24");
+              }}
+            >
+              <h2>1 month</h2>
+            </button>
+            <button
+              className="btn-cont"
+              onClick={() => {
+                setDate("all");
+              }}
+            >
+              <h2 className="active-trade">All time</h2>
+            </button>
+          </header>
+          <div className="w-full  md:grid md:grid-cols-8 md:gap-2 min-w-0">
+            <div className=" flex h-[91vh] items-center mb-4 md:mb-0 md:col-start-1 md:col-end-9 lg:col-end-7 bg-p rounded-md shadowglow ">
+              <TradeTable data={tradesData} inp={true} />
+            </div>
+            <div className=" mb-4 md:hidden lg:flex lg:mb-0 lg:col-start-7 lg:col-end-9">
+              <Overview />
+            </div>
+          </div>
         </div>
       </div>
     </div>

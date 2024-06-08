@@ -12,7 +12,7 @@ export default function TradeItemClosed({ data }) {
 
   const ExtendItem = () => {
     return (
-      <div className="w-full mt-2 text-text">
+      <div className="w-full mt-2 text-text border-b">
         <div className="flex flex-col md:flex-row justify-between mb-4">
           <div className="w-full md:w-1/3 dashboard-content ">
             <p className="w-full h-full p-2 outline-none resize-none rounded-xl ">
@@ -98,7 +98,7 @@ export default function TradeItemClosed({ data }) {
   };
 
   return (
-    <div className="w-full flex flex-col justify-center items-center border-b border-gradient-4 text-text mb-2 p-2 relative rounded-sm ">
+    <div className="w-full flex flex-col justify-center items-center text-text p-2 relative rounded-sm ">
       <div
         className="w-full grid grid-rows-1 grid-cols-7 gap-2 text-center center-h h-5 text-gray-500 py-2 hover:cursor-pointer"
         onClick={toggleExtend}

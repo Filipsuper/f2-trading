@@ -141,8 +141,10 @@ export const close_trade = async (trade, refresh, qty) => {
     });
 };
 
-export const get_set_data = async (url, setData) => {
-  get_data(url).then((res) => setData(res));
+export const get_set_data = async (url, setData, query) => {
+  let query_url = "";
+  if (query != undefined) query_url = query;
+  get_data(url + query_url).then((res) => setData(res));
 };
 
 export const post_login = async (data, refresh) => {

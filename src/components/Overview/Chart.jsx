@@ -27,7 +27,7 @@ export default function Chart({ data, type }) {
     if (data == undefined) return;
 
     data.map((elem, idx) => {
-      pnl_mutable += elem;
+      pnl_mutable += elem.pnl;
       pnl_arr.push({ name: idx, price: pnl_mutable });
       index_arr.push(idx);
     });
@@ -63,7 +63,6 @@ export default function Chart({ data, type }) {
             margin={{ top: 5, right: 20, bottom: -10, left: -10 }}
           >
             <CartesianGrid stroke="#d1d4e2" strokeDasharray="5 5" />
-            <Tooltip />
             <Line
               type="monotone"
               dataKey="price"

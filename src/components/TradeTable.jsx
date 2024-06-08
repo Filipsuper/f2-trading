@@ -103,7 +103,7 @@ export default function TradeTable({ inp }) {
   }, tradesData);
 
   return (
-    <div className="w-full h-full flex flex-col border bg-inherit rounded-md border-gradient-2 ">
+    <div className=" w-full h-full flex  flex-col border bg-inherit rounded-md border-gradient-2 ">
       <div
         ref={contRef}
         className="h-fit w-full test-parent border-b border-bg"
