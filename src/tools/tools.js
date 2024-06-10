@@ -4,7 +4,7 @@ const PROD_API = "https://trademaxxer.com/api";
 const DEV_API = "http://127.0.0.1:9091/api";
 
 // REMEMBER TO CHANGE API WHEN PRODDING
-const API_URL = DEV_API;
+const API_URL = PROD_API;
 
 axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use((config) => {
