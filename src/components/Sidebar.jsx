@@ -6,7 +6,7 @@ import {
   Calendar,
   CalculatorFill,
 } from "react-bootstrap-icons";
-import Header from "./Header";
+import Header from "./ProfileHeader";
 import { useNavigate } from "react-router-dom";
 
 export default function Sidebar({ active }) {

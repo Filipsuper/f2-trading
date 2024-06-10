@@ -12,11 +12,13 @@ import {
 } from "recharts";
 import { ApplicationContext } from "../../providers/ApplicationProvider";
 
-export default function Chart({ data, type }) {
+export default function Chart(props) {
   const canvasRef = useRef();
   const [pnl, setPnl] = useState([]);
   const [chartData, setChartData] = useState([]);
   const { tradesData } = useContext(ApplicationContext);
+
+  const { data, type } = props;
 
   useEffect(() => {
     console.log(data);
@@ -72,6 +74,7 @@ export default function Chart({ data, type }) {
             />
             <XAxis dataKey="name" stroke="#d1d4e2" />
             <YAxis stroke="#d1d4e2" />
+            {props.children}
           </LineChart>
         </ResponsiveContainer>
       </div>

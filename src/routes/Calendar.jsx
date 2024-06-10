@@ -1,6 +1,5 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
 import Navbar from "../components/Navbar/Navbar";
 
 export default function Calendar() {

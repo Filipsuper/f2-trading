@@ -1,6 +1,6 @@
 import React from "react";
 import Sidebar from "../Sidebar";
-import Header from "../Header";
+import ProfileHeader from "../ProfileHeader";
 
 export default function Navbar({ active }) {
   return (
@@ -10,7 +10,7 @@ export default function Navbar({ active }) {
         <Sidebar active={active} />
       </div>
       <div className="hidden md:flex">
-        <Header />
+        <ProfileHeader />
       </div>
     </>
   );

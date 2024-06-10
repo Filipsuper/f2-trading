@@ -13,17 +13,20 @@ import { ApplicationContext } from "../providers/ApplicationProvider";
 import Overview from "../components/Overview/Overview";
 import Chart from "../components/Overview/Chart";
 import Navbar from "../components/Navbar/Navbar";
+import Header from "../components/Header/Header";
+import { Tooltip } from "recharts";
 
 export default function Dashboard() {
   const { tradesData, refresh, graphData, overviewData, user } =
     useContext(ApplicationContext);
+
   useEffect(() => {
     refresh();
   }, []);
 
   const Stats_obj = ({ text, data_inp }) => {
     return (
-      <div className="flex justify-center w-full h-full shadow-sm rounded-md bg-sec ">
+      <div className="flex justify-center w-full h-full shadow-sm rounded-md bg-p ">
         <div className="flex items-start flex-col w-full h-full relativbe">
           <p className="absolute p-1 text-start text-xs w-fit h-fit text-text border-b  border-bg">
             {text}
@@ -84,39 +87,70 @@ export default function Dashboard() {
     );
   };
 
+  const CustomTooltip = ({ active, payload, label }) => {
+    if (graphData[label] == undefined) return;
+    const { pnl, symbol, price, quantity } = graphData[label];
+
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-p p-2 container-style">
+          <p className="font-bold">{`Equity : ${payload[0].value} kr`}</p>
+          <div className="border p-2 rounded-md">
+            <div className="flex flex-row justify-between">
+              <p className="mr-1">{`${symbol}`}</p>
+              <p className={pnl > 0 ? "win-trade" : "loss-trade"}>
+                {`${pnl}`} kr
+                <span>{}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    return null;
+  };
+
   return (
-    <main className="flex flex-col md:h-screen bg-bg height-screen p-2 text-text">
-      <div className="h-full flex flex-col md:grid md:grid-cols-10 md:grid-rows-3 gap-2">
-        <div className="w-full h-full md:flex flex-col justify-between mb-4 md:mb-0 md:row-span-3 md:col-span-1">
+    <main className="flex flex-col md:h-screen bg-bg height-screen text-text p-2">
+      <div className="h-full flex flex-col md:flex-row ">
+        <div className="md:w-44 md:flex flex-col justify-between h-full mb-4">
           <Navbar active={"dashboard"} />
         </div>
-        <div className="h-full flex flex-col col-span-4 row-span-1 dashboard-cont bg-sec">
-          <Chart data={graphData} />
-        </div>
-        <div className="h-full gap-2 flex flex-col col-span-2 row-span-1 ">
-          <div className="dashboard-cont mb-0 bg-sec">
-            <BigDisplay
-              title={"PNL"}
-              add={Math.round((overviewData.pnl / 10000) * 1000) / 10 + "%"}
-            >
-              <h1 className="font-bold text-4xl">
-                {Math.round(overviewData.pnl)} kr
-              </h1>
-            </BigDisplay>
+        <div className="h-screen flex  flex-col w-full ">
+          <Header />
+          <div className="flex flex-col h-full md:grid md:grid-cols-10 md:grid-rows-3 gap-2">
+            <div className="h-full flex flex-col col-span-3 row-span-1 dashboard-cont bg-p">
+              <Chart data={graphData}>
+                <Tooltip content={<CustomTooltip />} />
+              </Chart>
+            </div>
+            <div className="h-full gap-2 flex flex-col col-span-2 row-span-1 ">
+              <div className="dashboard-cont mb-0 bg-p">
+                <BigDisplay
+                  title={"PNL"}
+                  add={Math.round((overviewData.pnl / 10000) * 1000) / 10 + "%"}
+                >
+                  <h1 className="font-bold text-4xl">
+                    {Math.round(overviewData.pnl)} kr
+                  </h1>
+                </BigDisplay>
+              </div>
+              <div className="dashboard-cont w-full bg-p">
+                <BigDisplay title={"Trades"} add={""}>
+                  <h1 className="font-bold text-4xl">
+                    {Math.round(overviewData.total_trades)}
+                  </h1>
+                </BigDisplay>
+              </div>
+            </div>
+            <div className="h-full flex flex-col col-span-3 row-span-1 ">
+              <Stats />
+            </div>
+            <div className="h-full flex row-start-1 row-end-3 col-start-6 col-end-11 bg-p rounded-md dashboard-cont">
+              <TradeTable data={tradesData} inp={false} />
+            </div>
           </div>
-          <div className="dashboard-cont w-full bg-sec">
-            <BigDisplay title={"Trades"} add={""}>
-              <h1 className="font-bold text-4xl">
-                {Math.round(overviewData.total_trades)}
-              </h1>
-            </BigDisplay>
-          </div>
-        </div>
-        <div className="h-full flex flex-col col-span-2 row-span-1 ">
-          <Stats />
-        </div>
-        <div className="h-full flex flex-grow row-start-1 row-end-4 col-start-6 col-end-11 bg-sec rounded-md dashboard-cont">
-          <TradeTable data={tradesData} inp={false} />
         </div>
       </div>
     </main>

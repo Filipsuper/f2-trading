@@ -270,13 +270,13 @@ button:active{
   @apply h-full rounded-md border-sec border border-gradient-2 md:mb-0 shadow-md
 }
 .container-style{
-  @apply rounded-md border-sec border border-gradient-2 md:mb-0 shadow-md
+  @apply rounded-md border-sec border border-gradient-2 shadow-md
 }
 .btn-cont{
   @apply flex flex-row items-center 
 }
 .btn-cont h2{
-  @apply text-xs  border-bg p-1
+  @apply text-xs  border-bg p-1 hover:text-a transition-colors
 }
 .menu-inp-cont{
   @apply horizontal center-h bg-bg rounded-md;

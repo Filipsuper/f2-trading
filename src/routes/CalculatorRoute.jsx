@@ -1,7 +1,8 @@
 import React from "react";
 import Calculator from "../components/Calculator/Calculator";
 import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
+
+import ProfileHeader from "../components/ProfileHeader";
 
 export default function CalculatorRoute() {
   return (
@@ -12,7 +13,7 @@ export default function CalculatorRoute() {
           <Sidebar active={"calculator"} />
         </div>
         <div className="hidden md:flex">
-          <Header />
+          <ProfileHeader />
         </div>
       </div>
       <div className="flex h-full w-full flex-col ">
