@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import { PersonFill } from "react-bootstrap-icons";
 import { ApplicationContext } from "../providers/ApplicationProvider";
 
-export default function Header() {
+export default function ProfileHeader() {
   const { user } = useContext(ApplicationContext);
 
   return (
