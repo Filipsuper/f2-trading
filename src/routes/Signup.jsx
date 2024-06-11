@@ -133,7 +133,7 @@ export default function Signup(props) {
         <div className={"inp-cont  "}>
           <input
             ref={sizeRef}
-            placeholder="Size (kr)"
+            placeholder="Starting balance ( kr )"
             type="text"
             className={"h-full trans-op-1000"}
           />

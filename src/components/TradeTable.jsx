@@ -122,31 +122,33 @@ export default function TradeTable({ inp }) {
             <h1 className="text-text">Trade logg</h1>
           </div>
         )}
-        <div className="h-fit text-text horizontal text-xs center-h grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-7 gap-2 text-center p-2 px-2 ">
+        <div className="h-fit text-text horizontal text-xs center-h grid grid-cols-3 grid-rows-2 md:grid-rows-1 md:grid-cols-8 gap-2 text-center p-2 px-2 ">
           <h1>Symbol</h1>
           <h1>Entry</h1>
           <h1>Exit / Target</h1>
           <h1>Status</h1>
+          <h1>Return</h1>
           <h1>Qty</h1>
           <h1>Setup</h1>
           <h1>Settings</h1>
         </div>
       </div>
       <ul className="flex flex-grow overflow-y-scroll bg-inherit border-bg">
-        <div className="flex h-full flex-col px-2 border-inherit py-2">
+        <div className="flex h-full flex-col px-2 border-inherit py-2 ">
           {inp
             ? tradesData
                 //sorts the array so closed trades are shown last
                 .sort((a, b) => a.closed - b.closed)
                 .map((item, idx) => {
                   if (!item.closed) return <TradeItem data={item} key={idx} />;
-                  else return <TradeItemClosed data={item} key={idx} />;
+                  else
+                    return <TradeItemClosed idx={idx} data={item} key={idx} />;
                 })
             : tradesData
                 .sort((a, b) => a.closed - b.closed) //sorts the array so closed trades are shown last
                 .map((item, idx) => {
                   if (item.closed)
-                    return <TradeItemClosed data={item} key={idx} />;
+                    return <TradeItemClosed idx={idx} data={item} key={idx} />;
                 })}
           {tradesData.length == 0 ? <PlaceholderTrade /> : null}
           {isDataLoading ? (

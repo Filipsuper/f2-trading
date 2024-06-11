@@ -225,7 +225,7 @@ export default function TradeItem({ data, live_prices }) {
   return (
     <div className="bg-sec border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
-        className="w-full grid grid-cols-4 grid-rows-2 md:grid-rows-1 md:grid-cols-7 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
+        className="w-full grid grid-cols-4 grid-rows-2 md:grid-rows-1 md:grid-cols-8 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
         onClick={toggleExtend}
       >
         <h1 className="font-bold text-text">{symbol}</h1>
@@ -234,7 +234,11 @@ export default function TradeItem({ data, live_prices }) {
         <div className="vertical center-h">
           <h1 className="font-bold text-sm active-trade">Active</h1>
         </div>
+        <h1 className={"font-bold " + (pnl > 0 ? " text-a" : "text-red-400")}>
+          {pnl > 0 ? "+ " + Math.round(pnl) : Math.round(pnl)} kr
+        </h1>
         <h1 className="font-bold">{Math.round(size / price)}</h1>
+
         <div className="vertical center-h">
           <h1 className="font-bold bg-p w-fit p-1 rounded-md">{setup}</h1>
         </div>

@@ -18,7 +18,7 @@ export default function CalculatorRoute() {
       </div>
       <div className="flex h-full w-full flex-col ">
         <div className="h-full horizontal center-h center-v flex-grow col-span-8 ">
-          <div className="bg-sec rounded-xl p-4 shadow-md">
+          <div className="bg-p rounded-xl p-4 shadow-md container-style">
             <Calculator />
           </div>
         </div>

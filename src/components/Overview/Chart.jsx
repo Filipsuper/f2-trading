@@ -1,4 +1,3 @@
-import { Tooltip } from "chart.js";
 import React, { useContext, useEffect, useMemo, useRef, useState } from "react";
 import {
   LineChart,
@@ -21,7 +20,6 @@ export default function Chart(props) {
   const { data, type } = props;
 
   useEffect(() => {
-    console.log(data);
     let pnl_mutable = 0;
     let pnl_arr = [];
     let index_arr = [];
@@ -33,13 +31,10 @@ export default function Chart(props) {
       pnl_arr.push({ name: idx, price: pnl_mutable });
       index_arr.push(idx);
     });
-    // const data = [{name: 'Page A', uv: 400, pv: 2400, amt: 2400}, ...];
 
     setPnl(Math.round(pnl_mutable));
 
     setChartData(pnl_arr);
-
-    // if (data["pnl"] != undefined) setPnl(data["y"][data["y"].length - 1]);
   }, [data]);
 
   return (
@@ -66,7 +61,7 @@ export default function Chart(props) {
           >
             <CartesianGrid stroke="#d1d4e2" strokeDasharray="5 5" />
             <Line
-              type="monotone"
+              type="linear"
               dataKey="price"
               stroke="#3fab8a"
               strokeWidth="2px"

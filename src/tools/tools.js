@@ -25,20 +25,6 @@ const post_data = async (url, post_data) => {
   return await data;
 };
 
-export const get_user_data = async () => {
-  return get_data("/user");
-};
-
-export const get_overview = async (setData, refresh) => {
-  try {
-    let data = await get_data("/overview").then(() => refresh());
-    console.log(await data);
-    setData(data);
-  } catch (error) {
-    console.error("Fetch error:", error);
-  }
-};
-
 export const remove_trade = async (trade_data, refresh) => {
   try {
     let data = await post_data("/trades/delete", trade_data).then(() =>
