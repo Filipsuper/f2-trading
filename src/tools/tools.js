@@ -4,7 +4,7 @@ const PROD_API = "https://trademaxxer.com/api";
 const DEV_API = "http://127.0.0.1:9091/api";
 
 // REMEMBER TO CHANGE API WHEN PRODDING
-const API_URL = PROD_API;
+const API_URL = DEV_API;
 
 axios.defaults.baseURL = API_URL;
 axios.interceptors.request.use((config) => {
@@ -19,7 +19,7 @@ const get_data = async (url) => {
   return await data;
 };
 
-const post_data = async (url, post_data) => {
+export const post_data = async (url, post_data) => {
   let response = await axios.post(url, post_data);
   let data = response.data;
   return await data;
@@ -151,3 +151,23 @@ export const create_account = async (data, refresh) => {
 };
 
 // const parse_graph_data = (trades: Array) => {};
+export const fetch_nasdaq_data = async (endpoint) => {
+  try {
+    const response = await fetch(`${API_URL}/proxy/${endpoint}`, {
+      headers: {
+        accept: "application/json",
+      },
+      method: "GET",
+      mode: "cors",
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+  }
+};

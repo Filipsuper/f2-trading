@@ -12,6 +12,7 @@ import Chart from "../Overview/Chart.jsx";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 import { close_trade, update_trade } from "../../tools/tools.js";
 import Modul from "../Modul.jsx";
+import { parse_symbol_name } from "../../tools/utils.js";
 
 export default function TradeItem({ data, live_prices }) {
   const {
@@ -228,9 +229,9 @@ export default function TradeItem({ data, live_prices }) {
         className="w-full grid grid-cols-4 grid-rows-2 md:grid-rows-1 md:grid-cols-8 gap-4 md:gap-2 text-center center-h h-24 md:h-16 py-4 hover:cursor-pointer"
         onClick={toggleExtend}
       >
-        <h1 className="font-bold text-text">{symbol}</h1>
-        <h1>{Math.round(price)}</h1>
-        <h1>{target}</h1>
+        <h1 className="font-bold text-text ">{parse_symbol_name(symbol)}</h1>
+        <h1>{Math.round(target * 100) / 100}</h1>
+        <h1>{Math.round(target * 100) / 100}</h1>
         <div className="vertical center-h">
           <h1 className="font-bold text-sm active-trade">Active</h1>
         </div>

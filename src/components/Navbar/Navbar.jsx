@@ -12,7 +12,7 @@ export default function Navbar({ active }) {
       <div>
         <Sidebar active={active} />
       </div>
-      <div className="hidden md:flex">
+      <div className="">
         <ProfileHeader
           setShowSettings={setShowSettings}
           showSettings={showSettings}

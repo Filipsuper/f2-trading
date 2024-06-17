@@ -5,8 +5,8 @@
 @layer base {
     :root {
       --text:  #444e63;
-      --bg: #d1d4e2;
-      --p: #eff0f5;
+      --bg: #e7e8ef;
+      --p: #fafafb;
       --s: #ffffff;
       --a: #3fab8a;
     }

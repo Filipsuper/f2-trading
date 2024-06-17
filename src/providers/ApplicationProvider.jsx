@@ -29,7 +29,6 @@ export const ApplicationProvider = () => {
   }, [date]);
 
   const refresh = useCallback(() => {
-    console.log(date);
     get_set_data("/trades", setTradesData);
     get_set_data("/overview?days=" + date, setOverviewData);
     get_set_data("/graph_data?days=" + date, setGraphData);

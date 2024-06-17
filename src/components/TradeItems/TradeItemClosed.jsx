@@ -4,6 +4,7 @@ import Menu from "./Menu.jsx";
 import { CaretUpFill, CaretDownFill, XOctagon } from "react-bootstrap-icons";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 import ScatterCont from "../Dashboard/ScatterCont.jsx";
+import { parse_symbol_name } from "../../tools/utils.js";
 
 export default function TradeItemClosed({ data, idx }) {
   const { symbol, size, price, stop, target, exit, pnl, notes, setup } = data;
@@ -139,7 +140,7 @@ export default function TradeItemClosed({ data, idx }) {
   return (
     <div
       className={
-        "w-full flex flex-col justify-center items-center text-text p-2 relative rounded-sm   " +
+        "w-full flex flex-col justify-center items-center text-text p-2 relative rounded-sm    " +
         (idx % 2 == 0 ? "backdrop-brightness-[98%]" : "")
       }
     >
@@ -147,16 +148,25 @@ export default function TradeItemClosed({ data, idx }) {
         className="w-full grid grid-rows-1 grid-cols-8 gap-2 text-center center-h h-5 text-gray-500 py-2 hover:cursor-pointer"
         onClick={toggleExtend}
       >
-        <h1 className="font-bold text-text uppercase">{symbol}</h1>
-        <h1>{Math.round(price)}</h1>
-        <h1>{Math.round(get_exit_mean(exit))}</h1>
-        <div className="vertical center-h">
+        <h1 className="font-bold text-text uppercase text-xs md:text-sm">
+          {parse_symbol_name(symbol)}
+        </h1>
+        <h1 className="text-xs md:text-base">{Math.round(price)}</h1>
+        <h1 className="text-xs md:text-base">
+          {Math.round(get_exit_mean(exit))}
+        </h1>
+        <div className="vertical center-h text-xs md:text-sm">
           <h1 className={pnl > 0 ? "win-trade" : "loss-trade"}>
             {pnl > 0 ? "win" : "loss"}
           </h1>
         </div>
-        <div className="horizontal center-h center-v">
-          <h1 className={"font-bold " + (pnl > 0 ? " text-a" : "text-red-400")}>
+        <div className="horizontal center-h center-v ">
+          <h1
+            className={
+              "font-bold text-xs md:text-sm " +
+              (pnl > 0 ? " text-a" : "text-red-400")
+            }
+          >
             {pnl > 0 ? "+ " + Math.round(pnl) : Math.round(pnl)} kr
           </h1>
         </div>

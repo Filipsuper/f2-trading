@@ -53,7 +53,7 @@ export default function Chart(props) {
           </h2>
         </div>
       </div>
-      <div className="w-full h-full">
+      <div className="w-full h-full min-w-full">
         <ResponsiveContainer width="100%" height="100%">
           <LineChart
             data={chartData}
