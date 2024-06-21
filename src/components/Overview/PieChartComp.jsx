@@ -7,7 +7,7 @@ export default function PieChartComp(props) {
 
   return (
     <div className="w-full h-full relative">
-      <div className="absolute w-full flex flex-row justify-between p-4 z-10">
+      <div className="absolute text-text w-full flex flex-row justify-between p-4 z-10">
         {props.children}
       </div>
       <div className="h-full">

@@ -65,20 +65,20 @@ export default function TradeTable({ inp }) {
   const PlaceholderTrade = () => {
     return (
       <>
-        <div className="horizontal center-h p-4 bg-sec w-full h-24 shadow-sm border-sec border-gradient-2 text-bg mb-2">
+        <div className="horizontal center-h p-4 bg-sec w-full h-24 shadow-sm border-sec border-gradient-2  text-bg mb-2">
           <h1>No trades yet </h1>
         </div>
-        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2 text-bg mb-2">
+        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2  text-bg mb-2">
           <h1>...</h1>
         </div>
-        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2 text-bg mb-2">
+        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2  text-bg mb-2">
           <h1>...</h1>
         </div>
-        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2 text-bg mb-2">
+        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2  text-bg mb-2">
           <h1>...</h1>
         </div>
 
-        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2 text-bg mb-2">
+        <div className="horizontal center-h p-4 bg-sec w-full h-12 shadow-sm border-sec border-gradient-2  text-bg mb-2">
           <h1>...</h1>
         </div>
         <div className="horizontal center-h center-v p-4 w-full h-full text-bg mb-2 border rounded-md border-bg">
@@ -103,7 +103,7 @@ export default function TradeTable({ inp }) {
   }, tradesData);
 
   return (
-    <div className=" w-full h-full flex  flex-col border bg-inherit rounded-md border-gradient-2 ">
+    <div className=" w-full h-full flex  flex-col border bg-inherit rounded-md border-sec border-gradient-2">
       <div
         ref={contRef}
         className="h-fit w-full test-parent border-b border-bg"

@@ -1,11 +1,18 @@
-import React, { useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Sidebar from "../Sidebar";
 import ProfileHeader from "../ProfileHeader";
 import Settings from "../Settings/Settings";
 import Modul from "../Modul";
+import { ApplicationContext } from "../../providers/ApplicationProvider";
 
 export default function Navbar({ active }) {
   const [showSettings, setShowSettings] = useState();
+  const { refresh } = useContext(ApplicationContext);
+
+  useEffect(() => {
+    refresh();
+  }, [showSettings]);
+
   return (
     <>
       <div></div>
@@ -24,7 +31,7 @@ export default function Navbar({ active }) {
           show={showSettings}
           setShow={setShowSettings}
         >
-          <Settings />
+          <Settings setShow={setShowSettings} />
         </Modul>
       ) : null}
     </>

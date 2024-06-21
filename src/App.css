@@ -2,23 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+
+
 @layer base {
+    /* light */
     :root {
       --text:  #444e63;
       --bg: #e7e8ef;
       --p: #fafafb;
       --s: #ffffff;
       --a: #3fab8a;
+      --gr: #ffffffda;
     }
-    /* :root {
-      --text:  #444e63;
-      --bg: #d1d4e2;
-      --p: rgb(222, 224, 234);
-      --s: #e6e8ee;
-      --a: #3fab8a;
+    .dark {
+      --text: #9ba5bb;
+      --bg: #0b0c0f;
+      --p: #191b20;
+      --s: #131419;
+      --a: #54c09f;
+      --gr: #9ba1b44c;
+    }
+    /* .dark {
+      --text: #9ba5bb;
+      --bg: #101018;
+      --p: #141418;
+      --s: #141418;
+      --a: #54c09f;
+      --gr: #4848487f;
     } */
-
 }
+
 
 @layer components{
   .debug{
@@ -231,7 +244,7 @@ button:active{
   @apply bg-sec text-xs
 }
 .s-t-cont input{
-  @apply w-full md:w-2/3 lg:w-full mt-1 text-center  bg-p rounded-md pt-1 px-1 text-2xl md:text-xl xl:text-2xl font-bold placeholder:text-text  
+  @apply w-full md:w-2/3 lg:w-full mt-1 text-center border-gradient-4  bg-p rounded-md pt-1 px-1 text-2xl md:text-xl xl:text-2xl font-bold placeholder:text-text  
 }
 .modify-btn{
   @apply border h-full border-bg rounded-md flex flex-col justify-center md:justify-between items-center
@@ -243,13 +256,16 @@ button:active{
   border-image: radial-gradient(circle, rgba(63, 171, 138, 0.8) 10%, rgba(2,0,36,0) 50%) 2;
 }
 .border-gradient-2{
-  border-image: radial-gradient(circle, rgba(255, 255, 255, 1) 0%, rgba(2,0,36,0) 95%) 2;
+  border-image: radial-gradient(circle, var(--gr) 0%, rgba(2,0,36,0) 95%) 2; 
 }
 .border-gradient-3{
-  border-image: linear-gradient(circle, rgb(84, 245, 197,0.1) 0%, rgba(2,0,36,0) 90%) 2;
+  border-image: linear-gradient(circle, var(--gr) 0%, rgba(2,0,36,0) 90%) 2;
 }
 .border-gradient-4{
-  border-image: radial-gradient(circle, rgba(197, 204, 208, 0.9) 0%, rgba(2,0,36,0) 90%) 2;
+  border-image: radial-gradient(circle, var(--gr) 0%, rgba(2,0,36,0) 90%) 2;
+}
+.border-gradient-dark{
+  border-image: radial-gradient(circle, var(--gr) 0%, rgba(2,0,36,0) 90%) 2;
 }
 .shadowglow{
   box-shadow: -180px 0px 50px -200px rgba(0, 0, 0, 0.208) ;

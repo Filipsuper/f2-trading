@@ -6,6 +6,8 @@ import { ApplicationContext } from "../../providers/ApplicationProvider";
 import Header from "../ProfileHeader";
 import PieChartComp from "./PieChartComp";
 import { Cell } from "recharts";
+import { EmptyDataRender } from "../misc/EmptyDataRender";
+import { EmptyDataRenderPie } from "../misc/EmptyDataRenderPie";
 
 export default function Overview() {
   const { overviewData, graphData } = useContext(ApplicationContext);
@@ -55,42 +57,48 @@ export default function Overview() {
     <div className=" rounded w-full flex flex-col justify-center items-between">
       {/* <h1 className="pb-2 mb-2 text-text">Account Performance</h1> */}
       <div className="flex flex-col flex-grow items-center justify-center">
-        <div className="bg-p rounded-md w-full h-full md:h-52 container-style">
+        <div className="bg-p rounded-md w-full h-full md:h-52 border-sec container-style">
           <Chart data={graphData} />
         </div>
         <div className="h-48 md:h-0 flex-grow flex flex-row w-full mt-2 border-bg bg-p rounded-md container-style ">
-          <div className=" w-1/2">
-            <div className="w-full h-full horizontal center-h">
-              <PieChartComp data={pieChartData[0]}>
-                <h1 className="text-xs">Win % </h1>
-                <h1 className="win-trade text-xs">
-                  {Math.round(
-                    (overviewData.total_win_trades /
-                      (overviewData.total_win_trades +
-                        overviewData.total_loss_trades)) *
-                      100
-                  )}
-                  %
-                </h1>
-              </PieChartComp>
-            </div>
-          </div>
-          <div className=" w-1/2 ">
-            <div className="w-full h-full horizontal center-h">
-              <PieChartComp data={pieChartData[1]}>
-                <h1 className="text-xs">Win/Loss Ratio</h1>
-                <h1 className="win-trade text-xs">
-                  {Math.round(
-                    (overviewData.average_win_size /
-                      Math.abs(overviewData.average_loss_size)) *
-                      100
-                  ) / 100}
-                </h1>
-              </PieChartComp>
-            </div>
-          </div>
+          {overviewData.total_trades === 0 ? (
+            <EmptyDataRenderPie />
+          ) : (
+            <>
+              <div className=" w-1/2">
+                <div className="w-full h-full horizontal center-h">
+                  <PieChartComp data={pieChartData[0]}>
+                    <h1 className="text-xs">Win % </h1>
+                    <h1 className="win-trade text-xs">
+                      {Math.round(
+                        (overviewData.total_win_trades /
+                          (overviewData.total_win_trades +
+                            overviewData.total_loss_trades)) *
+                          100
+                      )}
+                      %
+                    </h1>
+                  </PieChartComp>
+                </div>
+              </div>
+              <div className=" w-1/2 ">
+                <div className="w-full h-full horizontal center-h">
+                  <PieChartComp data={pieChartData[1]}>
+                    <h1 className="text-xs">Win/Loss Ratio</h1>
+                    <h1 className="win-trade text-xs">
+                      {Math.round(
+                        (overviewData.average_win_size /
+                          Math.abs(overviewData.average_loss_size)) *
+                          100
+                      ) / 100}
+                    </h1>
+                  </PieChartComp>
+                </div>
+              </div>
+            </>
+          )}
         </div>
-        <div className="h-48 flex-grow grid grid-rows-2 grid-cols-2 w-full mt-2 border-bg bg-p rounded-md container-style">
+        <div className="h-48 flex-grow grid grid-rows-2 grid-cols-2 w-full mt-2 border-sec bg-p rounded-md container-style">
           <div>
             <Stats_obj
               text={"Wins: "}

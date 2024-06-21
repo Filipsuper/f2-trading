@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -9,9 +9,14 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import { ApplicationContext } from "../../providers/ApplicationProvider";
+import { conditional_render } from "../../tools/parse_tradeitem";
 
 export default function ScatterCont({ trade }) {
   const [chartData, setChartData] = useState([]);
+  const { darkMode } = useContext(ApplicationContext);
+
+  let darkModeColor = "#9ba1b44c";
 
   const get_exit_mean = (exit_data) => {
     let exit_arr = [];
@@ -59,10 +64,14 @@ export default function ScatterCont({ trade }) {
     <div className="h-5/6 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart margin={{ left: -20 }} data={chartData}>
-          <CartesianGrid strokeDasharray="3 3" />
+          <CartesianGrid
+            strokeDasharray="3 3"
+            stroke={conditional_render(darkMode, darkModeColor, "#d1d4e2")}
+          />
           <XAxis
             fontSize={12}
             padding={{ top: 20, left: 20, right: 20, bottom: 20 }}
+            stroke={conditional_render(darkMode, darkModeColor, "#d1d4e2")}
           />
           <YAxis
             type="number"
@@ -75,7 +84,7 @@ export default function ScatterCont({ trade }) {
           <Line
             type="step"
             dataKey="entryPrice"
-            stroke="#3fab8a"
+            stroke={"#3fab8a"}
             strokeWidth={2}
           />
           <Line

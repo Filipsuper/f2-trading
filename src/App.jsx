@@ -80,9 +80,9 @@ function App() {
   }, []);
 
   return (
-    <div className="flex flex-col  md:h-screen bg-bg gap-2 p-2">
-      <div className="flex flex-col md:flex-row h-full">
-        <div className="md:w-44 md:flex flex-col justify-between h-full mb-4 ">
+    <div className="flex flex-col  md:h-screen bg-bg gap-2 p-2 dark:dark">
+      <div className="flex flex-col md:flex-row h-full ">
+        <div className="md:w-44 md:flex flex-col justify-between h-full mb-4">
           <Navbar active={"home"} />
         </div>
         <div className="flex h-full flex-col w-full">

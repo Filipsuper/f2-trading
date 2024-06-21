@@ -28,6 +28,7 @@ export default function Signup(props) {
       defaultTarget: targetRef.current.value,
       defaultStop: stopRef.current.value,
       defaultSize: sizeRef.current.value,
+      theme: "light",
     };
 
     create_account(data)

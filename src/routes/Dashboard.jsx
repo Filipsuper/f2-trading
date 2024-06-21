@@ -114,7 +114,7 @@ export default function Dashboard() {
   };
 
   return (
-    <main className="flex flex-col md:h-screen bg-bg height-screen text-text p-2">
+    <main className="flex flex-col md:h-screen bg-bg height-screen text-text p-2 dark:dark">
       <div className="h-full flex flex-col md:flex-row ">
         <div className="md:w-44 md:flex flex-col justify-between h-full mb-4">
           <Navbar active={"dashboard"} />

@@ -6,16 +6,20 @@ import {
   XAxis,
   YAxis,
   ResponsiveContainer,
-  AreaChart,
-  Area,
+  BarChart,
+  Bar,
+  Cell,
 } from "recharts";
 import { ApplicationContext } from "../../providers/ApplicationProvider";
+import { conditional_render } from "../../tools/parse_tradeitem";
+import { color } from "chart.js/helpers";
+import { EmptyDataRender } from "../misc/EmptyDataRender";
 
 export default function Chart(props) {
   const canvasRef = useRef();
   const [pnl, setPnl] = useState([]);
   const [chartData, setChartData] = useState([]);
-  const { tradesData } = useContext(ApplicationContext);
+  const { tradesData, darkMode } = useContext(ApplicationContext);
 
   const { data, type } = props;
 
@@ -37,6 +41,8 @@ export default function Chart(props) {
     setChartData(pnl_arr);
   }, [data]);
 
+  let darkModeColor = "#9ba1b44c";
+
   return (
     <div className="w-full h-60 md:h-full vertical center-h p-4">
       <div className="w-full flex flex-row justify-between mb-2">
@@ -54,24 +60,36 @@ export default function Chart(props) {
         </div>
       </div>
       <div className="w-full h-full min-w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <LineChart
-            data={chartData}
-            margin={{ top: 5, right: 20, bottom: -10, left: -10 }}
-          >
-            <CartesianGrid stroke="#d1d4e2" strokeDasharray="5 5" />
-            <Line
-              type="linear"
-              dataKey="price"
-              stroke="#3fab8a"
-              strokeWidth="2px"
-              dot={false}
-            />
-            <XAxis dataKey="name" stroke="#d1d4e2" />
-            <YAxis stroke="#d1d4e2" />
-            {props.children}
-          </LineChart>
-        </ResponsiveContainer>
+        {chartData.length === 0 ? (
+          <EmptyDataRender />
+        ) : (
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={chartData}
+              margin={{ top: 5, right: 20, bottom: -10, left: -10 }}
+            >
+              <CartesianGrid
+                stroke={conditional_render(darkMode, darkModeColor, "#d1d4e2")}
+                strokeDasharray="5 5"
+              />
+              <Line
+                type="linear"
+                dataKey="price"
+                stroke="#3fab8a"
+                strokeWidth="2px"
+                dot={false}
+              />
+              <XAxis
+                dataKey="name"
+                stroke={conditional_render(darkMode, darkModeColor, "#d1d4e2")}
+              />
+              <YAxis
+                stroke={conditional_render(darkMode, darkModeColor, "#d1d4e2")}
+              />
+              {props.children}
+            </LineChart>
+          </ResponsiveContainer>
+        )}
       </div>
     </div>
   );

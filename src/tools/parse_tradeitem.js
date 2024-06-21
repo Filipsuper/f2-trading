@@ -24,3 +24,21 @@ export const parse_symbol_name = (name: String) => {
   test.push(name_arr[length - 1]);
   return test;
 };
+
+// make a function that rounds a float to two decimals
+export const round_to_two_decimals = (num: number) => {
+  return Math.round((num + Number.EPSILON) * 100) / 100;
+};
+
+// make a function that that conditionally renders a react component
+export const conditional_render = (
+  condition: boolean,
+  component: any,
+  otherwise: any
+) => {
+  if (condition) {
+    return component;
+  } else {
+    return otherwise ? otherwise : null;
+  }
+};

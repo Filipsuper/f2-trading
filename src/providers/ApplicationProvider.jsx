@@ -22,6 +22,15 @@ export const ApplicationProvider = () => {
   const [graphData, setGraphData] = useState([""]);
   const [user, setUser] = useState("test");
   const [date, setDate] = useState("all");
+  const [darkMode, setDarkMode] = useState(() => {
+    // Check local storage for dark mode preference
+    const isDarkMode = localStorage.getItem("darkMode") === "true";
+    return isDarkMode;
+  });
+
+  const toggleDarkMode = useCallback(() => {
+    setDarkMode(!darkMode);
+  });
 
   useEffect(() => {
     get_set_data("/graph_data?days=" + date, setGraphData);
@@ -34,6 +43,17 @@ export const ApplicationProvider = () => {
     get_set_data("/graph_data?days=" + date, setGraphData);
     get_set_data("/user", setUser);
   }, []);
+
+  useEffect(() => {
+    // Apply the dark mode class based on state
+    if (darkMode) {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    // Save preference to localStorage
+    localStorage.setItem("darkMode", darkMode);
+  }, [darkMode]);
 
   return (
     <ApplicationContext.Provider
@@ -48,6 +68,8 @@ export const ApplicationProvider = () => {
         user,
         date,
         setDate,
+        toggleDarkMode,
+        darkMode,
       }}
     >
       <Outlet />

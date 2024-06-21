@@ -8,11 +8,14 @@ import {
   Plus,
   Dash,
 } from "react-bootstrap-icons";
-import Chart from "../Overview/Chart.jsx";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 import { close_trade, update_trade } from "../../tools/tools.js";
 import Modul from "../Modul.jsx";
-import { parse_symbol_name } from "../../tools/utils.js";
+import {
+  conditional_render,
+  parse_symbol_name,
+  round_to_two_decimals,
+} from "../../tools/parse_tradeitem.js";
 
 export default function TradeItem({ data, live_prices }) {
   const {
@@ -51,30 +54,11 @@ export default function TradeItem({ data, live_prices }) {
   };
 
   useEffect(() => {
-    // fast_add_price.current.value = Math.round(price);
-  }, []);
-
-  useEffect(() => {
     setPotentialTrade({
       loss: calculate_potential(price, size, stop, target).loss,
       win: calculate_potential(price, size, stop, target).win,
     });
   }, [data]);
-
-  const Stats_obj = (props) => {
-    return (
-      <div className="flex justify-center h-full w-full bg-inherit relative">
-        <div className="flex items-start flex-col w-full overflow-hidden">
-          <p className="p-1 text-start text-text text-xs w-fit h-fit  border-bg absolute">
-            {props.text}
-          </p>
-          <p className="pb-2 mt-2 font-bold text-sm h-full w-full flex justify-center items-center text-center  text-text whitespace-nowrap">
-            {props.children}
-          </p>
-        </div>
-      </div>
-    );
-  };
 
   const save_data = (notes) => {
     let parsed_data = {
@@ -90,6 +74,45 @@ export default function TradeItem({ data, live_prices }) {
     };
 
     update_trade(parsed_data, refresh);
+  };
+
+  const item_fast_add = () => {
+    let parsed_data = {
+      trade_id: trade_id,
+      symbol: symbol,
+      price: parseFloat(fast_add_price.current.value),
+      isFast: true,
+    };
+    update_trade(parsed_data, refresh);
+  };
+  const item_fast_sell = () => {
+    let trade_data = {
+      symbol: symbol,
+      price: fast_add_price.current.value,
+      quantity: 1,
+      trade_id: trade_id,
+      isFast: true,
+    };
+    close_trade(trade_data, refresh);
+  };
+
+  const toggleExtend = () => {
+    setExtend(extend ? false : true);
+  };
+
+  const Stats_obj = (props) => {
+    return (
+      <div className="flex justify-center h-full w-full bg-inherit relative">
+        <div className="flex items-start flex-col w-full overflow-hidden">
+          <p className="p-1 text-start text-text text-xs w-fit h-fit  border-bg absolute">
+            {props.text}
+          </p>
+          <p className="pb-2 mt-2 font-bold text-sm h-full w-full flex justify-center items-center text-center  text-text whitespace-nowrap">
+            {props.children}
+          </p>
+        </div>
+      </div>
+    );
   };
 
   const ExtendItem = () => {
@@ -110,11 +133,13 @@ export default function TradeItem({ data, live_prices }) {
               <div className="pnl-cont">
                 <p className="text-xs text-text">Realised profit</p>
                 <h1 className="text-3xl font-bold text-text">
-                  {Math.round(pnl_text) + "kr"}
+                  {round_to_two_decimals(pnl_text) + "kr"}
                 </h1>
               </div>
               <h2 className="win-trade flex md:hidden lg:flex text-lg md:p-1 font-bold text-text">
-                {"+ " + Math.round((pnl_text / initial_size) * 100) + "%"}
+                {"+ " +
+                  round_to_two_decimals((pnl_text / initial_size) * 100) +
+                  "%"}
               </h2>
             </div>
             <div className="flex flex-row md:flex-col xl:flex-row h-1/2 w-full mt-6 md:mt-2 relative">
@@ -135,14 +160,16 @@ export default function TradeItem({ data, live_prices }) {
                 <div className="flex flex-row ">
                   <h2 className="text-text text-start mr-2">Stop</h2>
                   <h2 className="loss-trade text-start">
-                    {"-" + Math.round(((price - stop) / price) * 100) + "%"}
+                    {"-" +
+                      round_to_two_decimals(((price - stop) / price) * 100) +
+                      "%"}
                   </h2>
                 </div>
                 <input
                   ref={stopRef}
                   className=""
                   type="text"
-                  placeholder={stop + " kr"}
+                  placeholder={round_to_two_decimals(stop) + " kr"}
                 />
               </div>
               <div className="s-t-cont">
@@ -150,20 +177,21 @@ export default function TradeItem({ data, live_prices }) {
                   <h2 className="text-text text-start mr-2">Target</h2>
                   <h2 className="win-trade text-start">
                     {" "}
-                    {Math.round(((target - price) / price) * 100) + "%"}
+                    {round_to_two_decimals(((target - price) / price) * 100) +
+                      "%"}
                   </h2>
                 </div>
                 <input
                   ref={targetRef}
                   className=""
                   type="text"
-                  placeholder={target + " kr"}
+                  placeholder={round_to_two_decimals(target) + " kr"}
                 />
               </div>
             </div>
           </div>
 
-          <div className="h-full col-span-3 row-span-2 md:col-span-1 md:row-span-3 grid grid-rows-2 grid-cols-3 p-2 border-bg">
+          <div className="h-full col-span-3 row-span-2 md:col-span-1 md:row-span-3 grid grid-rows-2 grid-cols-3 p-2 border-p">
             <div className="trade-item-cont border-r border-b ">
               <Stats_obj text={"Entry"}>{Math.round(price) + " kr"}</Stats_obj>
             </div>
@@ -199,30 +227,6 @@ export default function TradeItem({ data, live_prices }) {
     );
   };
 
-  const toggleExtend = () => {
-    setExtend(extend ? false : true);
-  };
-
-  const item_fast_add = () => {
-    let parsed_data = {
-      trade_id: trade_id,
-      symbol: symbol,
-      price: parseFloat(fast_add_price.current.value),
-      isFast: true,
-    };
-    update_trade(parsed_data, refresh);
-  };
-  const item_fast_sell = () => {
-    let trade_data = {
-      symbol: symbol,
-      price: fast_add_price.current.value,
-      quantity: 1,
-      trade_id: trade_id,
-      isFast: true,
-    };
-    close_trade(trade_data, refresh);
-  };
-
   return (
     <div className="bg-sec border-b w-full flex flex-col justify-center items-center mb-2 rounded-sm px-2 text-text shadow-sm border-sec border-gradient-2">
       <div
@@ -230,15 +234,18 @@ export default function TradeItem({ data, live_prices }) {
         onClick={toggleExtend}
       >
         <h1 className="font-bold text-text ">{parse_symbol_name(symbol)}</h1>
-        <h1>{Math.round(target * 100) / 100}</h1>
-        <h1>{Math.round(target * 100) / 100}</h1>
+        <h1>{round_to_two_decimals(target)}</h1>
+        <h1>{round_to_two_decimals(target)}</h1>
         <div className="vertical center-h">
           <h1 className="font-bold text-sm active-trade">Active</h1>
         </div>
         <h1 className={"font-bold " + (pnl > 0 ? " text-a" : "text-red-400")}>
-          {pnl > 0 ? "+ " + Math.round(pnl) : Math.round(pnl)} kr
+          {conditional_render(pnl > 0, "+") +
+            round_to_two_decimals(pnl_text) +
+            " "}
+          kr
         </h1>
-        <h1 className="font-bold">{Math.round(size / price)}</h1>
+        <h1 className="font-bold">{round_to_two_decimals(size / price)}</h1>
 
         <div className="vertical center-h">
           <h1 className="font-bold bg-p w-fit p-1 rounded-md">{setup}</h1>
@@ -291,12 +298,12 @@ export default function TradeItem({ data, live_prices }) {
             </button>
           </div>
           <button className="text-xl text-a hidden md:flex">
-            {extend ? <CaretUpFill /> : <CaretDownFill />}
+            {conditional_render(extend, <CaretUpFill />, <CaretDownFill />)}
           </button>
         </div>
       </div>
       <div className="w-full border-inherit text-a">
-        {extend ? <ExtendItem /> : null}
+        {conditional_render(extend, <ExtendItem />)}
       </div>
       {showContextMenu ? (
         <Modul

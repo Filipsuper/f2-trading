@@ -4,7 +4,7 @@ import Menu from "./Menu.jsx";
 import { CaretUpFill, CaretDownFill, XOctagon } from "react-bootstrap-icons";
 import { ApplicationContext } from "../../providers/ApplicationProvider.jsx";
 import ScatterCont from "../Dashboard/ScatterCont.jsx";
-import { parse_symbol_name } from "../../tools/utils.js";
+import { parse_symbol_name } from "../../tools/parse_tradeitem.js";
 
 export default function TradeItemClosed({ data, idx }) {
   const { symbol, size, price, stop, target, exit, pnl, notes, setup } = data;
@@ -30,7 +30,7 @@ export default function TradeItemClosed({ data, idx }) {
 
   const ExtendItem = () => {
     return (
-      <div className="w-full mt-2 text-text border-b ">
+      <div className="w-full mt-2 text-text border-b border-gr">
         <div className="flex flex-col md:flex-row justify-between mb-4 gap-2">
           <div className="w-full md:w-2/3 flex flex-row justify-around ">
             <div className="text-start w-fit p-2  flex flex-col">
@@ -109,7 +109,7 @@ export default function TradeItemClosed({ data, idx }) {
               </div>
             </div>
           </div>
-          <div className="w-full md:w-1/3 h-48 md:min-h-full flex flex-col items-center">
+          <div className="w-full md:w-1/3 h-48 md:min-h-full flex flex-col items-center ">
             <h1 className="ml-10 text-sm">Exit visualizer</h1>
             <div className="ml-10 flex w-full flex-row justify-around">
               <div className="horizontal center-h">
@@ -124,7 +124,7 @@ export default function TradeItemClosed({ data, idx }) {
             <ScatterCont trade={data} />
           </div>
         </div>
-        <div className="w-full h-fit border-t border-dashed ">
+        <div className="w-full h-fit border-t border-dashed border-gr ">
           <p className="w-full h-full p-2  ">
             {!notes ? "No notes..." : notes}
           </p>

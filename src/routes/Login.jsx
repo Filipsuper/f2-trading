@@ -45,7 +45,7 @@ export default function Login() {
       </div>
       <div
         className={
-          "z-0 min-w-fit p-10 flex flex-col bg-sec border rounded-xl border-gradient-3 shadow-md transition-height " +
+          "z-0 min-w-fit p-10 flex flex-col bg-sec border rounded-xl border-gradient-4 shadow-md transition-height " +
           (signup ? "max-h-96" : "max-h-72")
         }
       >
